@@ -16,6 +16,8 @@ export const LIST_SWITCH_MS = 450
 export const TOAST_DURATION_MS = 4_000
 
 export interface WatchlistState {
+  loadError: boolean
+  retryListLoad: () => void
   isSwitching: boolean
   listLoadVersion: number
   toast: { id: number; message: string } | null
@@ -46,10 +48,25 @@ export interface WatchlistState {
 }
 
 /** Each app/test owns a store. There are no global timers or mutable singletons. */
-export function createWatchlistStore(isPlaying = true) {
+export function createWatchlistStore(
+  isPlaying = true,
+  failInitialLoad = false,
+) {
+  let pendingFailure = failInitialLoad
   return createStore<WatchlistState>()((set) => ({
-    isSwitching: false,
+    loadError: false,
+    isSwitching: failInitialLoad,
     listLoadVersion: 0,
+    retryListLoad: () =>
+      set((state) =>
+        state.loadError
+          ? {
+              loadError: false,
+              isSwitching: true,
+              listLoadVersion: state.listLoadVersion + 1,
+            }
+          : state,
+      ),
     toast: null,
     toastVersion: 0,
     selectWatchlist: (id) =>
@@ -61,16 +78,19 @@ export function createWatchlistStore(isPlaying = true) {
           return state
         return {
           market: { ...state.market, activeWatchlistId: id },
+          loadError: false,
           isSwitching: true,
           listLoadVersion: state.listLoadVersion + 1,
         }
       }),
     completeListSwitch: (version) =>
-      set((state) =>
-        version === state.listLoadVersion && state.isSwitching
-          ? { isSwitching: false }
-          : state,
-      ),
+      set((state) => {
+        if (version !== state.listLoadVersion || !state.isSwitching)
+          return state
+        const loadError = pendingFailure
+        pendingFailure = false
+        return { isSwitching: false, loadError }
+      }),
     dismissToast: (id) =>
       set((state) => (state.toast?.id === id ? { toast: null } : state)),
     setMembership: (listId, instrumentId, included) =>
@@ -196,6 +216,7 @@ export function createWatchlistStore(isPlaying = true) {
                 ? defaultWatchlistId
                 : state.market.activeWatchlistId,
           },
+          loadError: false,
           isSwitching: false,
           listLoadVersion: state.listLoadVersion + 1,
           toastVersion: version,

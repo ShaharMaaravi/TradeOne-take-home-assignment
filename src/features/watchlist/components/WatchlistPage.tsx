@@ -2,6 +2,7 @@ import { useRef, useState } from 'react'
 import { useShallow } from 'zustand/react/shallow'
 import { Plus, SlidersHorizontal } from 'lucide-react'
 import { useWatchlist } from '../state/useWatchlist'
+import { RecoveryMessage } from '../../../components/ui/RecoveryMessage'
 import { ListActions } from './ListActions'
 import { WatchlistSelector } from './WatchlistSelector'
 import { AddSecurityDialog } from './AddSecurityDialog'
@@ -17,6 +18,8 @@ export function WatchlistPage() {
   const [addOpen, setAddOpen] = useState(false)
   const addButtonRef = useRef<HTMLButtonElement>(null)
   const returnFocusRef = useRef<HTMLElement | null>(null)
+  const loadError = useWatchlist((state) => state.loadError)
+  const retryListLoad = useWatchlist((state) => state.retryListLoad)
   const isSwitching = useWatchlist((state) => state.isSwitching)
   const openAdd = (trigger: HTMLElement) => {
     returnFocusRef.current = trigger
@@ -65,7 +68,7 @@ export function WatchlistPage() {
           <button
             ref={addButtonRef}
             className={styles.addButton}
-            disabled={isSwitching}
+            disabled={isSwitching || loadError}
             onClick={(event) => openAdd(event.currentTarget)}
           >
             <span>הוסף נייר</span>
@@ -78,6 +81,15 @@ export function WatchlistPage() {
       <div aria-busy={isSwitching}>
         {isSwitching ? (
           <WatchlistSkeleton />
+        ) : loadError ? (
+          <RecoveryMessage
+            title="לא ניתן לטעון את רשימת המעקב"
+            description="טעינת הנתונים נכשלה. אפשר לנסות שוב."
+            onRetry={() => {
+              retryListLoad()
+              addButtonRef.current?.closest('main')?.focus()
+            }}
+          />
         ) : visibleIds.length > 0 ? (
           <WatchlistTable
             instruments={instruments}

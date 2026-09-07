@@ -60,13 +60,16 @@ export function WatchlistProvider({
   children,
   store: suppliedStore,
   initiallyPlaying = true,
+  failInitialLoad = false,
 }: {
   children: ReactNode
   store?: WatchlistStore
   initiallyPlaying?: boolean
+  failInitialLoad?: boolean
 }) {
   const [store] = useState(
-    () => suppliedStore ?? createWatchlistStore(initiallyPlaying),
+    () =>
+      suppliedStore ?? createWatchlistStore(initiallyPlaying, failInitialLoad),
   )
   useMockFeed(store)
   useTransientStates(store)

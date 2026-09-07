@@ -5,11 +5,10 @@ All market data will be simulated locally; no external market API is required.
 
 ## Current checkpoint
 
-Step 8: responsive layout and accessibility refinement. Mobile navigation is
-available through a focus-managed drawer, the toolbar reflows at 320px, and the
-market ticker supports horizontal keyboard/touch scrolling. Text and price colors
-have stronger contrast; removal from the draft editor preserves keyboard focus.
-Changes currently reset on refresh.
+Step 9: integration checks and error recovery. A retryable loading-error scenario
+and rendering error boundary now complement the loading and empty states. The
+combined list workflow, retry recovery and offline live simulation are verified
+in Chromium, Firefox and WebKit. Changes currently reset on refresh.
 
 ## Run locally
 
@@ -44,7 +43,7 @@ loading, numeric text direction, browser errors, and the keyboard skip link. It
 also verifies live updates, pause/resume, frozen mode, and reduced-motion
 behavior, list switching, dialog keyboard focus, heart toggles, and mobile dialog scrolling. It saves review screenshots under the ignored `test-results/` folder.
 
-Before the first browser test run, run `npx playwright install chromium`.
+Before the first browser test run, run `npx playwright install chromium firefox webkit`.
 
 ## Structure
 
@@ -147,7 +146,7 @@ runtime. See `THIRD_PARTY_NOTICES.md` for asset sources and licenses.
   flash. An arrow and accessible text supplement the color, and reduced-motion
   preferences disable flash animation.
 - Quotes use a deterministic simulated session clock, not the real wall clock.
-  Refreshing resets the session. List persistence is scheduled for later work.
+  Refreshing resets the session. List state is currently in-memory only.
 
 ## Sorting and filtering rules
 
@@ -241,3 +240,33 @@ landscape viewport, drawer focus wrapping and resize cleanup, ticker keyboard
 scrolling, and focus after removing all draft rows. Automated checks do not replace
 manual assistive-technology testing; no screen-reader compatibility certification
 is claimed.
+
+## Error recovery and integration verification
+
+Open `/?live=0&scenario=load-error` to review a deterministic loading failure.
+The first simulated load fails after the same 450 ms delay used for list switching.
+Retry starts a new load and succeeds; switching lists also allows recovery. This
+is an explicit mock scenario, not a network request or random failure. Reloading
+this URL repeats the scenario. The regular `/` and `/?live=0` routes are unaffected.
+
+Retry preserves lists, quotes, filters and sorting. Stale completion callbacks are
+ignored, and the provider cleans up loading timers under Strict Mode. Adding and
+list-editing actions are disabled while loading or showing a loading error. A
+Hebrew alert explains the failure, with a keyboard-accessible Retry button; focus
+moves to the watchlist while the retry button is replaced by the skeleton.
+
+A rendering error boundary catches unexpected errors in the view tree and offers
+a retry without recreating the store. It cannot fix a persistent programming bug
+or catch asynchronous/event-handler errors. Loading failures use explicit store
+state rather than being thrown through this boundary.
+
+The full browser suite runs in Chromium. Three integrated scenarios also run in
+Firefox and WebKit: recovery with retained filters and subsequent sorting; adding,
+editing, renaming, setting a default and deleting across lists; and live updates
+plus membership changes after going offline. Offline testing begins after the app
+and local fonts load; this does not imply offline installation or reload support.
+Use `npm run test:e2e -- --project=chromium` for Chromium-only checks.
+
+Visual review compared the 1664×928 desktop screenshot against the supplied
+recording and inspected the recovery state. The deliberate visual differences
+listed above remain. No deployment or cross-session persistence is configured.

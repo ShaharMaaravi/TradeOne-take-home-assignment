@@ -20,7 +20,7 @@ export function ListActions() {
   const lists = useWatchlist((s) => s.market.watchlists)
   const activeId = useWatchlist((s) => s.market.activeWatchlistId)
   const defaultId = useWatchlist((s) => s.market.defaultWatchlistId)
-  const switching = useWatchlist((s) => s.isSwitching)
+  const switching = useWatchlist((s) => s.isSwitching || s.loadError)
   const rename = useWatchlist((s) => s.renameList)
   const remove = useWatchlist((s) => s.deleteList)
   const setDefault = useWatchlist((s) => s.setDefaultList)
