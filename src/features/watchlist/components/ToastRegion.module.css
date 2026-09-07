@@ -1,0 +1,33 @@
+.region {
+  position: fixed;
+  inset-block-end: 78px;
+  inset-inline: 16px;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 150;
+}
+.toast {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-inline-size: 620px;
+  padding: 12px 20px;
+  border-radius: 6px;
+  background: #262729;
+  color: white;
+  box-shadow: 0 3px 12px #0002;
+  font-size: 13px;
+}
+.toast svg {
+  inline-size: 16px;
+  block-size: 16px;
+  color: #5ac3ad;
+  flex-shrink: 0;
+}
+@media (max-width: 760px) {
+  .toast {
+    padding: 10px 14px;
+    font-size: 12px;
+  }
+}

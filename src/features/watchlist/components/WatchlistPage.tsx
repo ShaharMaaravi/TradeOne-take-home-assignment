@@ -1,7 +1,10 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { useShallow } from 'zustand/react/shallow'
-import { ChevronDown, ListFilter, Plus, SlidersHorizontal } from 'lucide-react'
+import { ListFilter, Plus, SlidersHorizontal } from 'lucide-react'
 import { useWatchlist } from '../state/useWatchlist'
+import { WatchlistSelector } from './WatchlistSelector'
+import { AddSecurityDialog } from './AddSecurityDialog'
+import { WatchlistSkeleton } from './WatchlistSkeleton'
 import { WatchlistTable } from './WatchlistTable'
 import { WatchlistFilters } from './WatchlistFilters'
 import { WatchlistEmptyState } from './WatchlistEmptyState'
@@ -10,6 +13,20 @@ import styles from './WatchlistPage.module.css'
 
 export function WatchlistPage() {
   const [filtersOpen, setFiltersOpen] = useState(false)
+  const [addOpen, setAddOpen] = useState(false)
+  const addButtonRef = useRef<HTMLButtonElement>(null)
+  const returnFocusRef = useRef<HTMLElement | null>(null)
+  const isSwitching = useWatchlist((state) => state.isSwitching)
+  const openAdd = (trigger: HTMLElement) => {
+    returnFocusRef.current = trigger
+    setAddOpen(true)
+  }
+  const restoreFocus = () => {
+    ;(returnFocusRef.current?.isConnected
+      ? returnFocusRef.current
+      : addButtonRef.current
+    )?.focus()
+  }
   const filterCount = useWatchlist((state) => activeFilterCount(state.filters))
   const resetFilters = useWatchlist((state) => state.resetFilters)
   const visibleIds = useWatchlist(
@@ -27,14 +44,7 @@ export function WatchlistPage() {
   return (
     <main id="watchlist" tabIndex={-1} aria-labelledby="watchlist-title">
       <div className={styles.toolbar}>
-        <button
-          className={styles.listSelector}
-          disabled
-          aria-label={`רשימת מעקב: ${activeList.name}`}
-        >
-          <bdi>{activeList.name}</bdi>
-          <ChevronDown aria-hidden="true" />
-        </button>
+        <WatchlistSelector />
         <div className={styles.toolbarActions}>
           <button
             className={styles.listActions}
@@ -51,7 +61,12 @@ export function WatchlistPage() {
               </span>
             )}
           </button>
-          <button className={styles.addButton} disabled>
+          <button
+            ref={addButtonRef}
+            className={styles.addButton}
+            disabled={isSwitching}
+            onClick={(event) => openAdd(event.currentTarget)}
+          >
             <span>הוסף נייר</span>
             <Plus aria-hidden="true" />
           </button>
@@ -65,12 +80,28 @@ export function WatchlistPage() {
         </div>
       </div>
       {filtersOpen && <WatchlistFilters />}
-      {visibleIds.length > 0 ? (
-        <WatchlistTable instruments={instruments} instrumentIds={visibleIds} />
-      ) : (
-        <WatchlistEmptyState
-          isEmptyList={activeList.instrumentIds.length === 0}
-          onReset={resetFilters}
+      <div aria-busy={isSwitching}>
+        {isSwitching ? (
+          <WatchlistSkeleton />
+        ) : visibleIds.length > 0 ? (
+          <WatchlistTable
+            instruments={instruments}
+            instrumentIds={visibleIds}
+          />
+        ) : (
+          <WatchlistEmptyState
+            isEmptyList={activeList.instrumentIds.length === 0}
+            onReset={resetFilters}
+            onAdd={openAdd}
+          />
+        )}
+      </div>
+      {addOpen && (
+        <AddSecurityDialog
+          open={addOpen}
+          onOpenChange={setAddOpen}
+          listId={activeList.id}
+          restoreFocus={restoreFocus}
         />
       )}
     </main>

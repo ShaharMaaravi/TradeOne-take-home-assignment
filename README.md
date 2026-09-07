@@ -5,15 +5,14 @@ All market data will be simulated locally; no external market API is required.
 
 ## Current checkpoint
 
-Step 5: sorting and filtering. Click a column header to cycle ascending,
-descending, and saved list order. Open the sliders button beside Add Security to
-combine search, market, instrument type, and daily-performance filters. Closing
-the panel keeps active filters; its badge shows how many are applied. Live
-updates continue to recalculate numeric sorting and performance filters.
+Step 6: list selection and adding securities. The list dropdown switches between
+four example lists with a short loading skeleton. Add Security opens a searchable
+catalogue with category tabs and heart buttons for immediate membership changes.
+Empty lists offer an Add First Security action. Sorting, filtering, and live quote
+updates continue to work with these interactions.
 
-Empty lists and no-match results have separate messages. Clearing filters retains
-the chosen sort. List selection and add/edit/remove interactions remain scheduled
-for the following steps.
+List editing, drag-and-drop ordering, rename/default/delete actions are planned
+for step 7. Changes currently reset on refresh.
 
 ## Run locally
 
@@ -42,17 +41,18 @@ Open the local URL printed by Vite.
 Unit/component tests cover domain consistency, chart edge cases, deterministic
 store replay, timer cleanup under Strict Mode, hidden-tab suspension, isolated
 quote subscriptions, price-flash cleanup, every sort key, tie/missing-value rules, combined filters,
-and empty-state recovery. Playwright
+membership changes, catalogue search, stale loading/toast timers, and empty-state recovery. Playwright
 checks the static page at 1440px and 1664px, mobile table scrolling at 390px, logo
 loading, numeric text direction, browser errors, and the keyboard skip link. It
 also verifies live updates, pause/resume, frozen mode, and reduced-motion
-behavior. It saves review screenshots under the ignored `test-results/` folder.
+behavior, list switching, dialog keyboard focus, heart toggles, and mobile dialog scrolling. It saves review screenshots under the ignored `test-results/` folder.
 
 Before the first browser test run, run `npx playwright install chromium`.
 
 ## Structure
 
 - `src/App.tsx`: application entry component.
+- `src/components/ui/`: shared accessible modal primitive.
 - `src/components/layout/`: sidebar, top bar, market ticker, and application shell.
 - `src/features/watchlist/components/`: table, toolbar, price feedback, playback control, logos, and SVG/CSS visuals.
 - `src/features/watchlist/state/`: instance-scoped Zustand store, selectors, and feed lifecycle.
@@ -65,7 +65,8 @@ Before the first browser test run, run `npx playwright install chromium`.
 - `src/features/watchlist/domain/`: readonly models, calculations, formatters, and tests.
 - `src/features/watchlist/mock/`: instrument fixtures, seeded generation, pure tick function, and tests.
 
-Shared UI primitives will be extracted when they have a real use case.
+The shared modal wraps Radix Dialog; list selection and catalogue categories use
+Radix Dropdown Menu and Tabs for keyboard and focus behavior.
 
 ## Foundation decisions
 
@@ -177,3 +178,25 @@ matches all search terms across symbol and description, including Hebrew names.
 Gainers/losers compare price with previous close; flat quotes are a separate option.
 A quote that crosses the baseline can enter or leave a filtered view on the next tick.
 Filters and sorting are currently in-memory and reset on refresh.
+
+## List selection and catalogue membership
+
+Switching lists shows a simulated 450 ms loading skeleton and preserves filters
+and sort. Rapid switches cancel stale completion timers. The feed keeps updating
+while loading or while the add dialog is open.
+
+The catalogue searches symbols and descriptions using the same normalized query
+matching as table filters. Its All, Stocks, and ETFs tabs reflect the types present
+in the fixtures. It shows available securities rather than inventing recent-search
+history from the reference video. Search and category reset when the dialog reopens.
+
+Heart buttons immediately add or remove a security from the selected list, without
+a separate Save action. Additions prepend to saved manual order; an active sort can
+place them elsewhere. Duplicate additions are ignored, other lists are unaffected,
+and quotes remain in the catalogue after removal. A confirmation toast lasts four
+seconds; newer messages replace it and restart the timer.
+
+The modal traps keyboard focus, closes with Escape, and restores focus to its
+opener. If the empty-list action disappears after adding, focus returns to the
+main Add Security button. The result list scrolls inside the mobile viewport.
+Membership, list selection, sorting, and filters are in-memory only.

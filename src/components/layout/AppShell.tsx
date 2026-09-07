@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import { Info } from 'lucide-react'
+import { ToastRegion } from '../../features/watchlist/components/ToastRegion'
 import { PlaybackControl } from '../../features/watchlist/components/PlaybackControl'
 import { NavigationSidebar } from './NavigationSidebar'
 import { TopBar } from './TopBar'
@@ -27,6 +28,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         </span>
       </div>
       <MarketTicker />
+      <ToastRegion />
     </div>
   )
 }

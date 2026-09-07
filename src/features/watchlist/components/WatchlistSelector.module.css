@@ -1,0 +1,62 @@
+.menu {
+  z-index: 60;
+  min-inline-size: 215px;
+  max-inline-size: min(320px, calc(100vw - 24px));
+  max-block-size: var(--radix-dropdown-menu-content-available-height);
+  overflow-y: auto;
+  background: white;
+  border: 1px solid var(--color-border);
+  border-radius: 7px;
+  padding: 5px;
+  box-shadow: 0 3px 12px #24374628;
+}
+.item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-block-size: 43px;
+  padding: 8px 9px 8px 24px;
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+  font-size: 12px;
+}
+.item[data-highlighted] {
+  background: #f0f3f5;
+}
+.item[data-state='checked'] {
+  background: #f3f5f6;
+}
+.name {
+  min-inline-size: 70px;
+  flex: 1;
+}
+.preview {
+  display: flex;
+  flex-direction: row;
+  padding-inline-start: 4px;
+}
+.preview > * {
+  inline-size: 21px;
+  block-size: 21px;
+  margin-inline-start: -5px;
+  border: 2px solid white;
+  border-radius: 50%;
+  background-color: white;
+}
+.more {
+  display: grid;
+  place-items: center;
+  font-size: 8px;
+  color: #788992;
+}
+.check {
+  position: absolute;
+  inset-inline-end: 6px;
+  color: var(--color-primary);
+}
+.check svg {
+  inline-size: 12px;
+  block-size: 12px;
+}

@@ -4,9 +4,11 @@ import styles from './WatchlistEmptyState.module.css'
 export function WatchlistEmptyState({
   isEmptyList,
   onReset,
+  onAdd,
 }: {
   isEmptyList: boolean
   onReset: () => void
+  onAdd?: (trigger: HTMLElement) => void
 }) {
   const Icon = isEmptyList ? ListX : SearchX
   return (
@@ -20,6 +22,11 @@ export function WatchlistEmptyState({
           ? 'ניירות ערך שתוסיפו לרשימה יופיעו כאן.'
           : 'נסו לשנות את החיפוש או לנקות את הסינון.'}
       </p>
+      {isEmptyList && onAdd && (
+        <button onClick={(event) => onAdd(event.currentTarget)}>
+          הוסף נייר ראשון
+        </button>
+      )}
       {!isEmptyList && <button onClick={onReset}>נקה סינון</button>}
     </section>
   )

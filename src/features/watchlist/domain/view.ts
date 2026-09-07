@@ -6,6 +6,7 @@ import type {
   Quote,
 } from './types'
 import { getPercentageChange, getQuoteMetrics } from './calculations'
+import { matchesInstrumentQuery } from './catalogue'
 
 export type SortKey =
   | 'identity'
@@ -34,8 +35,6 @@ export const DEFAULT_FILTERS: WatchlistFilters = {
   performance: 'all',
 }
 const collator = new Intl.Collator('he', { numeric: true, sensitivity: 'base' })
-const normalize = (text: string) =>
-  text.normalize('NFKC').toLocaleLowerCase('he').trim()
 
 export function cycleSort(
   current: SortDescriptor,
@@ -61,9 +60,7 @@ function matchesFilters(
   quote: Quote,
   filters: WatchlistFilters,
 ): boolean {
-  const words = normalize(filters.query).split(/\s+/).filter(Boolean)
-  const text = normalize(`${instrument.symbol} ${instrument.name}`)
-  if (!words.every((word) => text.includes(word))) return false
+  if (!matchesInstrumentQuery(instrument, filters.query)) return false
   if (filters.market !== 'all' && instrument.market !== filters.market)
     return false
   if (filters.type !== 'all' && instrument.type !== filters.type) return false

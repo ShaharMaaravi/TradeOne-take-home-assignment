@@ -1,0 +1,47 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: #0008;
+}
+.content {
+  position: fixed;
+  z-index: 101;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  transform: translate(50%, -50%);
+  inline-size: min(620px, calc(100vw - 32px));
+  max-block-size: calc(100svh - 48px);
+  display: flex;
+  flex-direction: column;
+  min-block-size: 0;
+  border-radius: 14px;
+  background: #f8f8f8;
+  box-shadow: 0 16px 50px #0002;
+  padding: 48px 32px 24px;
+  outline: none;
+}
+.close {
+  position: absolute;
+  inset-block-start: 13px;
+  inset-inline-end: 13px;
+  display: grid;
+  place-items: center;
+  inline-size: 25px;
+  block-size: 25px;
+  border: 0;
+  border-radius: 50%;
+  color: #6d8a9e;
+  background: #f0f3f5;
+}
+.close svg {
+  inline-size: 15px;
+  block-size: 15px;
+}
+@media (max-width: 760px) {
+  .content {
+    padding: 44px 18px 18px;
+    border-radius: 12px;
+    max-block-size: calc(100svh - 32px);
+  }
+}

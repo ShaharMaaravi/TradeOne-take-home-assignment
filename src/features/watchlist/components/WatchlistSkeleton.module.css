@@ -1,0 +1,47 @@
+.header {
+  block-size: 30px;
+  background: #f5f6f7;
+}
+.row {
+  display: grid;
+  grid-template-columns: 2.5fr repeat(8, 1fr);
+  align-items: center;
+  gap: 20px;
+  block-size: clamp(54px, 3.85vw, 74px);
+  border-block-end: 1px solid #f4f5f6;
+  padding-inline: 12px;
+}
+.row span {
+  block-size: 10px;
+  inline-size: 60%;
+  justify-self: center;
+  background: #f0f2f3;
+  border-radius: 3px;
+  animation: pulse 1s ease-in-out infinite alternate;
+}
+.row span:first-child {
+  inline-size: 70%;
+  justify-self: start;
+}
+@keyframes pulse {
+  from {
+    opacity: 0.35;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .row span {
+    animation: none;
+  }
+}
+@media (max-width: 760px) {
+  .row {
+    gap: 7px;
+    grid-template-columns: 2fr repeat(3, 1fr);
+  }
+  .row span:nth-child(n + 5) {
+    display: none;
+  }
+}

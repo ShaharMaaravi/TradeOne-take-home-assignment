@@ -1,0 +1,151 @@
+.search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  background: white;
+  border: 1px solid #e8edf0;
+  border-radius: 24px;
+  padding: 10px 15px;
+}
+.search svg {
+  inline-size: 17px;
+  block-size: 17px;
+  color: #6c8a9e;
+}
+.search input {
+  min-inline-size: 0;
+  inline-size: 100%;
+  border: 0;
+  background: none;
+  outline: none;
+  font-size: 13px;
+  color: var(--color-text);
+}
+.search:focus-within {
+  outline: 2px solid #adc1d0;
+  outline-offset: 1px;
+}
+.search input::placeholder {
+  color: #8b959c;
+}
+.tabs {
+  display: flex;
+  flex-direction: column;
+  min-block-size: 0;
+}
+.tabList {
+  display: flex;
+  gap: 26px;
+  padding: 17px 5px 12px;
+  flex-shrink: 0;
+}
+.tab {
+  border: 0;
+  background: none;
+  padding: 3px 0;
+  color: #7a858b;
+  font-size: 12px;
+  border-block-end: 2px solid transparent;
+}
+.tab[data-state='active'] {
+  color: var(--color-primary);
+  border-block-end-color: var(--color-primary);
+}
+.panel {
+  display: flex;
+  flex-direction: column;
+  min-block-size: 0;
+  outline: none;
+}
+.resultsHeading {
+  font-size: 12px;
+  margin-block: 8px;
+  color: #646e75;
+}
+.resultsHeading span {
+  color: #9ba5ab;
+  margin-inline-start: 5px;
+}
+.results {
+  block-size: min(420px, 50svh);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #ccd4d8 transparent;
+  padding-inline-end: 7px;
+}
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-block-size: 57px;
+  padding: 8px;
+  border-radius: 4px;
+}
+.row:hover {
+  background: #eaecee;
+}
+.identity {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  min-inline-size: 0;
+  flex: 1;
+  font-size: 13px;
+  line-height: 1.35;
+}
+.description {
+  font-size: 10px;
+  color: #80888d;
+  max-inline-size: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.market {
+  font-size: 15px;
+}
+.heart {
+  display: grid;
+  place-items: center;
+  inline-size: 30px;
+  block-size: 30px;
+  background: white;
+  border: 1px solid #e6edf1;
+  border-radius: 50%;
+  color: #789bb0;
+}
+.heart[aria-pressed='true'] {
+  color: #4679a0;
+}
+.heart svg {
+  inline-size: 17px;
+  block-size: 17px;
+  stroke-width: 1.7;
+}
+.noResults {
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 14px;
+  min-block-size: 250px;
+  font-size: 14px;
+  color: #7d8a92;
+}
+.noResults > svg {
+  inline-size: 28px;
+  block-size: 28px;
+}
+.noResults button {
+  border: 0;
+  border-radius: 5px;
+  background: var(--color-primary);
+  color: white;
+  padding: 7px 14px;
+  font-size: 12px;
+}
