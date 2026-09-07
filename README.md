@@ -5,12 +5,15 @@ All market data will be simulated locally; no external market API is required.
 
 ## Current checkpoint
 
-Step 4: simulated live prices. The watchlist and market ticker update every 1.5
-seconds through a single feed. Price cells show short directional feedback;
-daily returns, volume, range bars, sparklines, and trend bars derive from the
-updated quotes. Use the pause/resume button in the bottom status strip to stop
-or continue updates. Sorting, filtering, and list-management controls remain
-scheduled for the next steps.
+Step 5: sorting and filtering. Click a column header to cycle ascending,
+descending, and saved list order. Open the sliders button beside Add Security to
+combine search, market, instrument type, and daily-performance filters. Closing
+the panel keeps active filters; its badge shows how many are applied. Live
+updates continue to recalculate numeric sorting and performance filters.
+
+Empty lists and no-match results have separate messages. Clearing filters retains
+the chosen sort. List selection and add/edit/remove interactions remain scheduled
+for the following steps.
 
 ## Run locally
 
@@ -38,7 +41,8 @@ Open the local URL printed by Vite.
 
 Unit/component tests cover domain consistency, chart edge cases, deterministic
 store replay, timer cleanup under Strict Mode, hidden-tab suspension, isolated
-quote subscriptions, and price-flash cleanup. Playwright
+quote subscriptions, price-flash cleanup, every sort key, tie/missing-value rules, combined filters,
+and empty-state recovery. Playwright
 checks the static page at 1440px and 1664px, mobile table scrolling at 390px, logo
 loading, numeric text direction, browser errors, and the keyboard skip link. It
 also verifies live updates, pause/resume, frozen mode, and reduced-motion
@@ -146,3 +150,30 @@ runtime. See `THIRD_PARTY_NOTICES.md` for asset sources and licenses.
   preferences disable flash animation.
 - Quotes use a deterministic simulated session clock, not the real wall clock.
   Refreshing resets the session. List persistence is scheduled for later work.
+
+## Sorting and filtering rules
+
+All data columns are sortable; the actions column is not. Header buttons support
+keyboard activation and expose `aria-sort`. Clicking a new column starts ascending;
+a third click restores the saved manual order. Sorting and filtering derive visible
+IDs without mutating the list, and missing metrics remain last in either direction.
+Equal values retain manual order. Quote rows are memoized and selected IDs use
+shallow equality so unaffected rows do not rerender unnecessarily.
+
+| Column                       | Sort value                                                    |
+| ---------------------------- | ------------------------------------------------------------- |
+| Security identity            | Symbol, using a Hebrew-aware collator with numeric comparison |
+| Last price                   | Raw quoted price in the instrument's declared unit            |
+| Absolute / percentage change | Difference / return from previous close                       |
+| Volume                       | Numeric traded-unit count                                     |
+| Daily range                  | Price position within the daily low/high range                |
+| Intraday chart               | Percentage return from day open                               |
+| Trend bar                    | Up segments minus down segments                               |
+| 30-day return                | Percentage return from the oldest of 30 prior daily closes    |
+
+Price sorting does not imply FX conversion between US dollars and Israeli agorot.
+Filters use AND semantics. Text search is case-insensitive, trims whitespace, and
+matches all search terms across symbol and description, including Hebrew names.
+Gainers/losers compare price with previous close; flat quotes are a separate option.
+A quote that crosses the baseline can enter or leave a filtered view on the next tick.
+Filters and sorting are currently in-memory and reset on refresh.

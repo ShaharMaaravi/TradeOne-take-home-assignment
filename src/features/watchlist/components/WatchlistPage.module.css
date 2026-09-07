@@ -72,3 +72,20 @@
     gap: 8px;
   }
 }
+
+.listActions {
+  position: relative;
+}
+.filterBadge {
+  position: absolute;
+  inset-block-start: -5px;
+  inset-inline-end: -5px;
+  display: grid;
+  place-items: center;
+  inline-size: 14px;
+  block-size: 14px;
+  border-radius: 50%;
+  color: white;
+  background: var(--color-primary);
+  font-size: 9px;
+}

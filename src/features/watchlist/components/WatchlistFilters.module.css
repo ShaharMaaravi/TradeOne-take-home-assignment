@@ -1,0 +1,73 @@
+.filters {
+  display: flex;
+  align-items: end;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 14px;
+  margin-block-end: 14px;
+  border: 1px solid var(--color-border);
+  border-radius: 7px;
+  background: #fafbfc;
+}
+.filters label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: #687982;
+  font-size: 12px;
+  flex: 1;
+  min-inline-size: 120px;
+}
+.filters select,
+.filters input {
+  block-size: 34px;
+  border: 1px solid #dce4e9;
+  border-radius: 5px;
+  padding: 5px 9px;
+  color: var(--color-text);
+  background: white;
+  min-inline-size: 0;
+  inline-size: 100%;
+}
+.filters .search {
+  position: relative;
+  flex: 2;
+  min-inline-size: 200px;
+}
+.search svg {
+  position: absolute;
+  inline-size: 14px;
+  block-size: 14px;
+  inset-inline-start: 10px;
+  inset-block-end: 10px;
+  color: #7792a2;
+}
+.search input {
+  padding-inline-start: 31px;
+}
+.reset {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border: 0;
+  background: none;
+  color: var(--color-primary);
+  font-size: 12px;
+  padding: 9px 0;
+}
+.reset svg {
+  inline-size: 13px;
+  block-size: 13px;
+}
+.reset:disabled {
+  color: #9ca7ae;
+}
+@media (max-width: 760px) {
+  .filters {
+    gap: 10px;
+    padding: 12px;
+  }
+  .filters .search {
+    flex-basis: 100%;
+  }
+}

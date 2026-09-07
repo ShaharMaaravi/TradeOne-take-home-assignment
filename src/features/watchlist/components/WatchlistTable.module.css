@@ -135,11 +135,6 @@
   inline-size: 13px;
   block-size: 13px;
 }
-.trendHeading {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-}
 .trendHeading svg {
   inline-size: 11px;
   block-size: 11px;
@@ -184,4 +179,31 @@
   .chartColumn {
     width: 11%;
   }
+}
+
+.sortButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  max-inline-size: 100%;
+  border: 0;
+  padding: 2px 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+}
+.sortButton svg {
+  inline-size: 10px;
+  block-size: 10px;
+  flex-shrink: 0;
+  opacity: 0;
+}
+.sortButton:hover svg,
+.sortButton:focus-visible svg,
+.sortButton[data-active='true'] svg {
+  opacity: 1;
+}
+.sortButton[data-active='true'] {
+  color: var(--color-primary);
 }

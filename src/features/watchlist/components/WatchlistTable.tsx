@@ -1,8 +1,10 @@
-import { CircleHelp, Ellipsis } from 'lucide-react'
+import { Ellipsis } from 'lucide-react'
 import type { Instrument, InstrumentId } from '../domain/types'
 import { getQuoteMetrics } from '../domain/calculations'
 import { formatChange, formatPercent, formatVolume } from '../domain/formatters'
 import { DailyRangeBar, Sparkline, TrendBar } from './MarketVisuals'
+import { memo } from 'react'
+import { SortableColumnHeader } from './SortableColumnHeader'
 import { SecurityLogo } from './SecurityLogo'
 import { PriceCell } from './PriceCell'
 import { useWatchlist } from '../state/useWatchlist'
@@ -13,7 +15,11 @@ interface WatchlistTableProps {
   instrumentIds: readonly InstrumentId[]
 }
 
-function SecurityRow({ instrument }: { instrument: Instrument }) {
+const SecurityRow = memo(function SecurityRow({
+  instrument,
+}: {
+  instrument: Instrument
+}) {
   const quote = useWatchlist((state) => state.market.quotes[instrument.id])
   if (!quote) return null
   const metrics = getQuoteMetrics(quote)
@@ -78,7 +84,7 @@ function SecurityRow({ instrument }: { instrument: Instrument }) {
       </td>
     </tr>
   )
-}
+})
 
 export function WatchlistTable({
   instruments,
@@ -112,21 +118,41 @@ export function WatchlistTable({
         </colgroup>
         <thead>
           <tr>
-            <th scope="col" className={styles.identityCell}>
+            <SortableColumnHeader
+              sortKey="identity"
+              className={styles.identityCell}
+            >
               שם (סימבול נייר/תיאור)
-            </th>
-            <th scope="col">שער אחרון</th>
-            <th scope="col">שינוי</th>
-            <th scope="col">% שינוי</th>
-            <th scope="col">מחזור</th>
-            <th scope="col">גבוה/נמוך יומי</th>
-            <th scope="col">גרף יומי</th>
-            <th scope="col">
-              <span className={styles.trendHeading}>
-                בר מגמה <CircleHelp aria-hidden="true" />
-              </span>
-            </th>
-            <th scope="col">תשואת 30 ימים</th>
+            </SortableColumnHeader>
+            <SortableColumnHeader sortKey="price">
+              שער אחרון
+            </SortableColumnHeader>
+            <SortableColumnHeader sortKey="change">שינוי</SortableColumnHeader>
+            <SortableColumnHeader sortKey="changePercent">
+              % שינוי
+            </SortableColumnHeader>
+            <SortableColumnHeader sortKey="volume">מחזור</SortableColumnHeader>
+            <SortableColumnHeader
+              sortKey="range"
+              hint="מיון לפי מיקום השער בטווח היומי"
+            >
+              גבוה/נמוך יומי
+            </SortableColumnHeader>
+            <SortableColumnHeader
+              sortKey="intraday"
+              hint="מיון לפי התשואה משער הפתיחה"
+            >
+              גרף יומי
+            </SortableColumnHeader>
+            <SortableColumnHeader
+              sortKey="trend"
+              hint="מיון לפי מספר העליות פחות מספר הירידות"
+            >
+              בר מגמה
+            </SortableColumnHeader>
+            <SortableColumnHeader sortKey="return30Day">
+              תשואת 30 ימים
+            </SortableColumnHeader>
             <th scope="col">
               <span className="sr-only">פעולות</span>
             </th>

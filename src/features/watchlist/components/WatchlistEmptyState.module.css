@@ -1,0 +1,33 @@
+.empty {
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  min-block-size: 290px;
+  gap: 10px;
+  border-block-start: 1px solid var(--color-border);
+  text-align: center;
+  padding: 24px;
+}
+.empty > svg {
+  inline-size: 32px;
+  block-size: 32px;
+  color: #93a7b5;
+  stroke-width: 1.4;
+}
+.empty h2 {
+  font-size: 19px;
+  font-weight: 600;
+  margin: 4px 0 0;
+}
+.empty p {
+  font-size: 14px;
+  color: var(--color-text-muted);
+}
+.empty button {
+  color: white;
+  background: var(--color-primary);
+  border: 0;
+  border-radius: 5px;
+  padding: 7px 18px;
+  margin-block-start: 8px;
+}
