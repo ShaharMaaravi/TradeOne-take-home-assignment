@@ -1,15 +1,16 @@
 import { ChevronDown, ListFilter, Plus } from 'lucide-react'
-import { createMockMarket } from '../mock/market'
+import { useWatchlist } from '../state/useWatchlist'
 import { WatchlistTable } from './WatchlistTable'
 import styles from './WatchlistPage.module.css'
 
-// A frozen snapshot keeps this visual checkpoint reproducible. Live state comes next.
-const market = createMockMarket()
-const activeList = market.watchlists.find(
-  (list) => list.id === market.activeWatchlistId,
-)!
-
 export function WatchlistPage() {
+  const instruments = useWatchlist((state) => state.market.instruments)
+  const activeList = useWatchlist(
+    (state) =>
+      state.market.watchlists.find(
+        (list) => list.id === state.market.activeWatchlistId,
+      )!,
+  )
   return (
     <main id="watchlist" tabIndex={-1} aria-labelledby="watchlist-title">
       <div className={styles.toolbar}>
@@ -36,8 +37,7 @@ export function WatchlistPage() {
         </div>
       </div>
       <WatchlistTable
-        instruments={market.instruments}
-        quotes={market.quotes}
+        instruments={instruments}
         instrumentIds={activeList.instrumentIds}
       />
     </main>

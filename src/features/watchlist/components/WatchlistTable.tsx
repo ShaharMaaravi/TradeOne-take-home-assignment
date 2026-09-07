@@ -1,30 +1,21 @@
 import { CircleHelp, Ellipsis } from 'lucide-react'
-import type { Instrument, InstrumentId, Quote } from '../domain/types'
+import type { Instrument, InstrumentId } from '../domain/types'
 import { getQuoteMetrics } from '../domain/calculations'
-import {
-  formatChange,
-  formatPercent,
-  formatPrice,
-  formatVolume,
-  getPriceUnitLabel,
-} from '../domain/formatters'
+import { formatChange, formatPercent, formatVolume } from '../domain/formatters'
 import { DailyRangeBar, Sparkline, TrendBar } from './MarketVisuals'
 import { SecurityLogo } from './SecurityLogo'
+import { PriceCell } from './PriceCell'
+import { useWatchlist } from '../state/useWatchlist'
 import styles from './WatchlistTable.module.css'
 
 interface WatchlistTableProps {
   instruments: readonly Instrument[]
-  quotes: Readonly<Record<InstrumentId, Quote>>
   instrumentIds: readonly InstrumentId[]
 }
 
-function SecurityRow({
-  instrument,
-  quote,
-}: {
-  instrument: Instrument
-  quote: Quote
-}) {
+function SecurityRow({ instrument }: { instrument: Instrument }) {
+  const quote = useWatchlist((state) => state.market.quotes[instrument.id])
+  if (!quote) return null
   const metrics = getQuoteMetrics(quote)
   const changeClass = styles[metrics.dailyDirection]
   const returnClass =
@@ -45,12 +36,7 @@ function SecurityRow({
         </div>
       </th>
       <td>
-        <span className={styles.price}>
-          <bdi dir="ltr">
-            {formatPrice(quote.price, instrument.priceDecimals)}
-          </bdi>
-          <span className={styles.unit}>{getPriceUnitLabel(instrument)}</span>
-        </span>
+        <PriceCell price={quote.price} instrument={instrument} />
       </td>
       <td className={changeClass}>
         <bdi dir="ltr">
@@ -96,7 +82,6 @@ function SecurityRow({
 
 export function WatchlistTable({
   instruments,
-  quotes,
   instrumentIds,
 }: WatchlistTableProps) {
   const instrumentsById = new Map(
@@ -150,9 +135,8 @@ export function WatchlistTable({
         <tbody>
           {instrumentIds.map((id) => {
             const instrument = instrumentsById.get(id)
-            const quote = quotes[id]
-            return instrument && quote ? (
-              <SecurityRow key={id} instrument={instrument} quote={quote} />
+            return instrument ? (
+              <SecurityRow key={id} instrument={instrument} />
             ) : null
           })}
         </tbody>

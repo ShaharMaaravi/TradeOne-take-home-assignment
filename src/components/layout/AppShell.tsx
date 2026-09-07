@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import { Info } from 'lucide-react'
+import { PlaybackControl } from '../../features/watchlist/components/PlaybackControl'
 import { NavigationSidebar } from './NavigationSidebar'
 import { TopBar } from './TopBar'
 import { MarketTicker } from './MarketTicker'
@@ -17,7 +18,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         {children}
       </div>
       <div className={styles.statusBar}>
-        <span className={styles.demoLabel}>נתוני הדגמה</span>
+        <PlaybackControl />
         <span className={styles.poweredBy}>
           <span className={styles.providerMark} aria-hidden="true">
             ↗

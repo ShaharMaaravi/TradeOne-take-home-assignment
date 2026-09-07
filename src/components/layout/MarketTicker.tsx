@@ -1,39 +1,19 @@
 import { ChevronLeft, ChevronRight, Sun } from 'lucide-react'
 import { Sparkline } from '../../features/watchlist/components/MarketVisuals'
 import styles from './AppShell.module.css'
-
-const indices = [
-  {
-    name: 'ת״א־35',
-    value: '4,147.05',
-    change: '-14.70 (-0.35%)',
-    down: true,
-    points: [12, 11, 13, 9, 8, 9, 6, 7, 4, 3, 4, 2],
-  },
-  {
-    name: 'ת״א־125',
-    value: '3,854.31',
-    change: '-4.01 (-0.10%)',
-    down: true,
-    points: [10, 11, 10, 7, 6, 8, 5, 6, 5, 4, 4, 3],
-  },
-  {
-    name: 'ת״א־90',
-    value: '6,419.02',
-    change: '+5.44 (+0.08%)',
-    down: false,
-    points: [2, 3, 2, 5, 4, 5, 5, 8, 7, 9, 8, 11],
-  },
-  {
-    name: 'דולר / שקל',
-    value: '3.354',
-    change: '+0.007 (+0.21%)',
-    down: false,
-    points: [1, 2, 1, 3, 4, 3, 4, 7, 6, 8, 10, 11],
-  },
-]
+import { useWatchlist } from '../../features/watchlist/state/useWatchlist'
+import {
+  getDirection,
+  getPercentageChange,
+} from '../../features/watchlist/domain/calculations'
+import {
+  formatChange,
+  formatPercent,
+  formatPrice,
+} from '../../features/watchlist/domain/formatters'
 
 export function MarketTicker() {
+  const indices = useWatchlist((state) => state.indices)
   return (
     <footer className={styles.footer} aria-label="מדדי שוק — נתוני הדגמה">
       <div className={styles.marketPicker}>
@@ -55,16 +35,30 @@ export function MarketTicker() {
               <span>{index.name}</span>
               <div dir="ltr">
                 <span
-                  className={index.down ? styles.negative : styles.positive}
+                  className={
+                    index.price < index.previousClose
+                      ? styles.negative
+                      : index.price > index.previousClose
+                        ? styles.positive
+                        : undefined
+                  }
                 >
-                  {index.change}
+                  {formatChange(
+                    index.price - index.previousClose,
+                    index.decimals,
+                  )}{' '}
+                  (
+                  {formatPercent(
+                    getPercentageChange(index.price, index.previousClose),
+                  )}
+                  )
                 </span>
-                <strong>{index.value}</strong>
+                <strong>{formatPrice(index.price, index.decimals)}</strong>
               </div>
             </div>
             <Sparkline
-              prices={index.points}
-              direction={index.down ? 'down' : 'up'}
+              prices={index.history}
+              direction={getDirection(index.price, index.previousClose)}
               label={`מגמת ${index.name}`}
               filled={false}
             />

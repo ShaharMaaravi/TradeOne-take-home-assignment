@@ -5,10 +5,12 @@ All market data will be simulated locally; no external market API is required.
 
 ## Current checkpoint
 
-Step 3: static visual baseline. The RTL shell, toolbar, eleven-row watchlist table,
-frozen charts, and bottom ticker are now visible. Prices stay fixed. Search, menu,
-list-selection, and action buttons are intentionally disabled at this checkpoint;
-live updates and interactions will arrive in subsequent reviewed steps.
+Step 4: simulated live prices. The watchlist and market ticker update every 1.5
+seconds through a single feed. Price cells show short directional feedback;
+daily returns, volume, range bars, sparklines, and trend bars derive from the
+updated quotes. Use the pause/resume button in the bottom status strip to stop
+or continue updates. Sorting, filtering, and list-management controls remain
+scheduled for the next steps.
 
 ## Run locally
 
@@ -34,10 +36,13 @@ Open the local URL printed by Vite.
 | `npm run test:watch` | Run unit/component tests in watch mode    |
 | `npm run test:e2e`   | Run Playwright browser tests              |
 
-Unit/component tests cover domain consistency and chart edge cases. Playwright
+Unit/component tests cover domain consistency, chart edge cases, deterministic
+store replay, timer cleanup under Strict Mode, hidden-tab suspension, isolated
+quote subscriptions, and price-flash cleanup. Playwright
 checks the static page at 1440px and 1664px, mobile table scrolling at 390px, logo
 loading, numeric text direction, browser errors, and the keyboard skip link. It
-saves review screenshots under the ignored `test-results/` folder.
+also verifies live updates, pause/resume, frozen mode, and reduced-motion
+behavior. It saves review screenshots under the ignored `test-results/` folder.
 
 Before the first browser test run, run `npx playwright install chromium`.
 
@@ -45,7 +50,8 @@ Before the first browser test run, run `npx playwright install chromium`.
 
 - `src/App.tsx`: application entry component.
 - `src/components/layout/`: sidebar, top bar, market ticker, and application shell.
-- `src/features/watchlist/components/`: table, toolbar, logos, and frozen SVG/CSS visuals.
+- `src/features/watchlist/components/`: table, toolbar, price feedback, playback control, logos, and SVG/CSS visuals.
+- `src/features/watchlist/state/`: instance-scoped Zustand store, selectors, and feed lifecycle.
 - `src/styles/tokens.css`: shared reference colors and type sizes.
 - `src/index.css`: minimal global styles and focus treatment.
 - `src/test/setup.ts`: DOM matchers and component-test cleanup.
@@ -65,7 +71,8 @@ Shared UI primitives will be extracted when they have a real use case.
   can opt into LTR locally.
 - React Strict Mode stays enabled to expose effect lifecycle problems early.
 - Oxlint is the linter supplied by the current Vite template.
-- Zustand and dnd-kit will be added when their corresponding features are built.
+- Zustand provides quote-level subscriptions; each app instance owns its store.
+- dnd-kit will be added when list editing is built.
 
 Repository: https://github.com/ShaharMaaravi/TradeOne-take-home-assignment
 
@@ -84,8 +91,7 @@ immutable update. The timestamp must be newer than existing quotes. A tick
 selects about 35% of instruments by default, moves prices by up to 0.2% before
 rounding, increases traded-unit volume, and retains at most 60 intraday points.
 The caller supplies each tick's seed and clock; there is no internal timer or
-`Math.random()`/`Date.now()` dependency. A future timer will advance the seed per
-tick. Fixed inputs provide a frozen/replayable mode for tests and visual checks.
+`Math.random()`/`Date.now()` dependency. The store advances the seed and logical timestamp per tick. Fixed inputs provide a frozen/replayable mode for tests and visual checks.
 
 All quote prices use the instrument's declared unit: USD, ILS, or ILA (agorot).
 The Israeli fixtures use whole agorot. Do not display them as shekels without
@@ -115,10 +121,28 @@ accessibility refinement remains planned for step 8.
 The PDF requires absolute change, so the table includes a separate change column
 in addition to percentage change. Amot was added to the mock catalogue to match
 the reference's eleven visible rows. Chart paths and returns come from seeded
-mock data and will not equal the recording's market values. The index ticker is
-also a static illustrative fixture at this stage.
+mock data and will not equal the recording's market values. The index ticker uses a separate illustrative fixture updated by the same feed
+cycle; it is not calculated as a weighted index of the visible securities.
 
 Apple, Meta, and Shopify marks are bundled SVG assets. The remaining company
 marks and the platform wordmark are approximations with local fallbacks; exact
 original artwork was not supplied. No external image/font request is needed at
 runtime. See `THIRD_PARTY_NOTICES.md` for asset sources and licenses.
+
+## Live playback and repeatable review
+
+- Open `/` for live simulation. One interval runs every 1,500 ms, selecting about
+  35% of securities each cycle. Rows subscribe only to their own quote; stable
+  catalogue/list references do not change on price ticks.
+- Open `/?live=0` for a frozen initial snapshot. This is the URL used by the visual
+  tests. The playback button can explicitly resume it.
+- Pausing stops the interval, and hidden tabs suspend it automatically. Resuming
+  advances from the current logical tick without replaying a backlog.
+- Provider cleanup removes the interval and visibility listener, including React
+  Strict Mode's development mount/unmount cycle.
+- Price feedback lasts 650 ms. Its direction compares successive prices, while
+  daily-change color compares against previous close. New/unchanged rows do not
+  flash. An arrow and accessible text supplement the color, and reduced-motion
+  preferences disable flash animation.
+- Quotes use a deterministic simulated session clock, not the real wall clock.
+  Refreshing resets the session. List persistence is scheduled for later work.

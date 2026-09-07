@@ -1,0 +1,26 @@
+.control {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 0;
+  padding: 2px 0;
+  background: transparent;
+  color: #6c7b82;
+  font-size: 10px;
+}
+.control svg {
+  inline-size: 11px;
+  block-size: 11px;
+}
+.dot {
+  inline-size: 5px;
+  block-size: 5px;
+  border-radius: 50%;
+  background: #a0a8ad;
+}
+.dot[data-playing='true'] {
+  background: var(--color-positive);
+}
+.control:hover {
+  color: var(--color-primary);
+}

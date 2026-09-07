@@ -10,7 +10,7 @@ for (const viewport of [
     const pageErrors: string[] = []
     page.on('pageerror', (error) => pageErrors.push(error.message))
     await page.setViewportSize(viewport)
-    await page.goto('/')
+    await page.goto('/?live=0')
     await page.evaluate(() => document.fonts.ready)
     await expect(
       page.getByRole('heading', { name: 'רשימות מעקב', exact: true }),
@@ -53,7 +53,7 @@ test('mobile isolates horizontal scrolling to the table and keeps identities vis
   page,
 }, testInfo) => {
   await page.setViewportSize({ width: 390, height: 844 })
-  await page.goto('/')
+  await page.goto('/?live=0')
   await page.evaluate(() => document.fonts.ready)
   expect(
     await page.evaluate(
@@ -83,7 +83,7 @@ test('mobile isolates horizontal scrolling to the table and keeps identities vis
 })
 
 test('keyboard skip link reaches the watchlist', async ({ page }) => {
-  await page.goto('/')
+  await page.goto('/?live=0')
   await page.keyboard.press('Tab')
   await expect(
     page.getByRole('link', { name: 'דלג לרשימת המעקב' }),

@@ -95,17 +95,6 @@
   overflow: hidden;
   white-space: nowrap;
 }
-.price {
-  display: inline-flex;
-  align-items: baseline;
-  justify-content: center;
-  gap: 4px;
-  white-space: nowrap;
-}
-.unit {
-  color: #a1a7aa;
-  font-size: 9px;
-}
 .up {
   color: var(--color-positive);
 }

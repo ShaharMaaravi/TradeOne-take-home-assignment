@@ -1,0 +1,54 @@
+.price {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.value {
+  display: inline-flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 4px;
+  border-radius: 3px;
+}
+.unit {
+  color: #a1a7aa;
+  font-size: 9px;
+}
+.arrow {
+  position: absolute;
+  inset-inline-end: -12px;
+  inline-size: 10px;
+  block-size: 10px;
+  visibility: hidden;
+}
+.price[data-direction='up'] {
+  color: var(--color-positive);
+  --flash-background: #cceee4;
+}
+.price[data-direction='down'] {
+  color: var(--color-negative);
+  --flash-background: #f6dce2;
+}
+.price:not([data-direction='unchanged']) .arrow {
+  visibility: visible;
+}
+.price:not([data-direction='unchanged']) .value {
+  animation: price-flash 650ms ease-out;
+}
+@keyframes price-flash {
+  from {
+    background: var(--flash-background);
+    box-shadow: 0 0 0 4px var(--flash-background);
+  }
+  to {
+    background: transparent;
+    box-shadow: 0 0 0 4px transparent;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .price:not([data-direction='unchanged']) .value {
+    animation: none;
+  }
+}
