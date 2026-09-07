@@ -1,0 +1,29 @@
+.page {
+  display: grid;
+  min-block-size: 100svh;
+  place-items: center;
+  padding: 24px;
+}
+
+.panel {
+  inline-size: min(100%, 480px);
+  padding: 32px;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  background: var(--color-surface);
+}
+
+.label {
+  color: var(--color-primary);
+  font-weight: 700;
+  text-align: start;
+}
+
+.panel h1 {
+  margin-block: 12px;
+  font-size: 28px;
+}
+
+.panel p:last-child {
+  color: var(--color-text-muted);
+}
