@@ -5,9 +5,10 @@ All market data will be simulated locally; no external market API is required.
 
 ## Current checkpoint
 
-Step 2: domain models and deterministic mock data. The screen remains a temporary
-placeholder; this checkpoint adds the data layer and its unit tests. Layout begins
-in step 3, and the timer/React integration follows in step 4.
+Step 3: static visual baseline. The RTL shell, toolbar, eleven-row watchlist table,
+frozen charts, and bottom ticker are now visible. Prices stay fixed. Search, menu,
+list-selection, and action buttons are intentionally disabled at this checkpoint;
+live updates and interactions will arrive in subsequent reviewed steps.
 
 ## Run locally
 
@@ -22,26 +23,30 @@ Open the local URL printed by Vite.
 
 ## Commands
 
-| Command | Purpose |
-| --- | --- |
-| `npm run dev` | Start Vite with hot reload |
-| `npm run typecheck` | Check application and configuration types |
-| `npm run lint` | Run Oxlint, including React Hooks rules |
-| `npm run build` | Type-check and produce `dist/` |
-| `npm run preview` | Serve the production build locally |
-| `npm test` | Run unit/component tests once |
-| `npm run test:watch` | Run unit/component tests in watch mode |
-| `npm run test:e2e` | Run Playwright browser tests |
+| Command              | Purpose                                   |
+| -------------------- | ----------------------------------------- |
+| `npm run dev`        | Start Vite with hot reload                |
+| `npm run typecheck`  | Check application and configuration types |
+| `npm run lint`       | Run Oxlint, including React Hooks rules   |
+| `npm run build`      | Type-check and produce `dist/`            |
+| `npm run preview`    | Serve the production build locally        |
+| `npm test`           | Run unit/component tests once             |
+| `npm run test:watch` | Run unit/component tests in watch mode    |
+| `npm run test:e2e`   | Run Playwright browser tests              |
 
-Unit tests cover quote calculations, formatting, fixture integrity, immutability,
-seeded replay, and 500 simulated ticks. Browser test cases will be added alongside
-UI behavior. Before running future browser tests, run `npx playwright install chromium`.
+Unit/component tests cover domain consistency and chart edge cases. Playwright
+checks the static page at 1440px and 1664px, mobile table scrolling at 390px, logo
+loading, numeric text direction, browser errors, and the keyboard skip link. It
+saves review screenshots under the ignored `test-results/` folder.
+
+Before the first browser test run, run `npx playwright install chromium`.
 
 ## Structure
 
 - `src/App.tsx`: application entry component.
-- `src/App.module.css`: scoped component styles.
-- `src/styles/tokens.css`: provisional shared color tokens.
+- `src/components/layout/`: sidebar, top bar, market ticker, and application shell.
+- `src/features/watchlist/components/`: table, toolbar, logos, and frozen SVG/CSS visuals.
+- `src/styles/tokens.css`: shared reference colors and type sizes.
 - `src/index.css`: minimal global styles and focus treatment.
 - `src/test/setup.ts`: DOM matchers and component-test cleanup.
 - `vitest.config.ts`: unit/component test configuration.
@@ -62,14 +67,13 @@ Shared UI primitives will be extracted when they have a real use case.
 - Oxlint is the linter supplied by the current Vite template.
 - Zustand and dnd-kit will be added when their corresponding features are built.
 
-The Hebrew font and color tokens are provisional until reference matching in
-step 3. Repository: https://github.com/ShaharMaaravi/TradeOne-take-home-assignment
+Repository: https://github.com/ShaharMaaravi/TradeOne-take-home-assignment
 
 No deployment is configured yet.
 
 ## Mock-data contract
 
-`createMockMarket(seed?, timestamp?)` returns a fresh catalogue of 16 US/Israeli
+`createMockMarket(seed?, timestamp?)` returns a fresh catalogue of 17 US/Israeli
 instruments, quotes, and four example lists (including an empty list). Default
 seed 42 and a fixed UTC timestamp make repeated calls reproducible. Names and
 prices are illustrative fixtures inspired by the video, not live or historical
@@ -98,3 +102,23 @@ session rollover is outside this assignment's current scope.
 Number formatting uses consistent Latin digits for mixed Hebrew/English rows.
 Wrap rendered numeric values in LTR/bidi-isolated elements when building the table.
 Missing/non-finite values display an em dash, while zero remains a valid value.
+
+## Visual baseline and known differences
+
+The desktop proportions follow the supplied 832×464 recording, reviewed at a
+1664×928 viewport. Assistant is bundled locally as a close Hebrew font match;
+the recording does not identify the original font. Spacing scales within bounded
+sizes. The table keeps all columns in a horizontal scroller on narrow screens,
+with a sticky security identity column. More extensive mobile navigation and
+accessibility refinement remains planned for step 8.
+
+The PDF requires absolute change, so the table includes a separate change column
+in addition to percentage change. Amot was added to the mock catalogue to match
+the reference's eleven visible rows. Chart paths and returns come from seeded
+mock data and will not equal the recording's market values. The index ticker is
+also a static illustrative fixture at this stage.
+
+Apple, Meta, and Shopify marks are bundled SVG assets. The remaining company
+marks and the platform wordmark are approximations with local fallbacks; exact
+original artwork was not supplied. No external image/font request is needed at
+runtime. See `THIRD_PARTY_NOTICES.md` for asset sources and licenses.

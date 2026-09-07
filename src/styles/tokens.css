@@ -1,11 +1,12 @@
 :root {
-  /* Provisional reference colors; calibrate against the video in step 3. */
   --color-primary: #10075b;
   --color-surface: #ffffff;
   --color-surface-muted: #f5f6f7;
-  --color-text: #25282b;
-  --color-text-muted: #68727a;
-  --color-border: #e8ecef;
-  --color-positive: #218b7e;
-  --color-negative: #c4455c;
+  --color-text: #34383a;
+  --color-text-muted: #7c8286;
+  --color-border: #edf0f2;
+  --color-positive: #369989;
+  --color-negative: #c26977;
+  --font-body: clamp(12px, 0.78vw, 14px);
+  --font-small: clamp(10px, 0.66vw, 12px);
 }

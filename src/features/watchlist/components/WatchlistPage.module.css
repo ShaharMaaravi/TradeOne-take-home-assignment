@@ -1,0 +1,74 @@
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  block-size: clamp(66px, 4.32vw, 82px);
+}
+.listSelector {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 9px 17px;
+  min-inline-size: 136px;
+  justify-content: space-between;
+  border: 0;
+  border-radius: 6px;
+  background: #e9e9e9;
+  font-size: var(--font-body);
+  color: #3b3d40;
+}
+.listSelector svg {
+  inline-size: 11px;
+  block-size: 11px;
+}
+.toolbarActions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.addButton {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 0;
+  padding: 10px 17px;
+  border-radius: 7px;
+  background: var(--color-primary);
+  color: white;
+  font-size: var(--font-body);
+}
+.addButton svg {
+  inline-size: 12px;
+  block-size: 12px;
+}
+.listActions {
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  inline-size: 28px;
+  block-size: 28px;
+  background: #f2f5f6;
+  color: #7792a2;
+}
+.listActions svg {
+  inline-size: 16px;
+  block-size: 16px;
+  stroke-width: 1.6;
+}
+@media (max-width: 760px) {
+  .toolbar {
+    block-size: 64px;
+    gap: 12px;
+  }
+  .listSelector {
+    min-inline-size: 128px;
+    padding: 9px 12px;
+  }
+  .addButton {
+    padding: 10px 12px;
+  }
+  .toolbarActions {
+    gap: 8px;
+  }
+}

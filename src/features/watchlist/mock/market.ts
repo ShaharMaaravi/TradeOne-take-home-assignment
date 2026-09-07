@@ -60,7 +60,7 @@ export function createMockMarket(seed = DEFAULT_SEED, now = DEFAULT_TIMESTAMP): 
     quotes,
     watchlists: [
       { id: 'general', name: 'כללי', instrumentIds: ['us-aapl', 'us-abev', 'us-ivv', 'us-pltr', 'us-msft', 'us-nflx', 'us-nvda'] },
-      { id: 'my-watchlist', name: 'My Watchlist 2', instrumentIds: instrumentFixtures.slice(0, 10).map(({ instrument }) => instrument.id) },
+      { id: 'my-watchlist', name: 'My Watchlist 2', instrumentIds: instrumentFixtures.slice(0, 11).map(({ instrument }) => instrument.id) },
       { id: 'israel', name: 'ישראל', instrumentIds: instrumentFixtures.filter(({ instrument }) => instrument.market === 'IL').map(({ instrument }) => instrument.id) },
       { id: 'empty', name: 'רשימה חדשה', instrumentIds: [] },
     ],

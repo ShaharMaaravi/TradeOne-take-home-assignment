@@ -1,0 +1,198 @@
+.tableScroll {
+  position: relative;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #bdc9d0 transparent;
+}
+.table {
+  inline-size: 100%;
+  min-inline-size: 850px;
+  table-layout: fixed;
+  border-collapse: collapse;
+  text-align: center;
+  font-size: var(--font-body);
+  font-variant-numeric: tabular-nums;
+}
+.identityColumn {
+  width: 25%;
+}
+.priceColumn {
+  width: 11%;
+}
+.changeColumn {
+  width: 7%;
+}
+.percentColumn {
+  width: 7%;
+}
+.volumeColumn {
+  width: 9%;
+}
+.rangeColumn {
+  width: 10%;
+}
+.chartColumn {
+  width: 9%;
+}
+.trendColumn {
+  width: 8%;
+}
+.returnColumn {
+  width: 10%;
+}
+.actionsColumn {
+  width: 4%;
+}
+.table thead {
+  background: #f6f6f6;
+  color: #737779;
+}
+.table thead th {
+  block-size: 30px;
+  font-size: var(--font-small);
+  font-weight: 400;
+  white-space: nowrap;
+  padding: 4px 6px;
+}
+.table tbody tr {
+  block-size: clamp(54px, 3.85vw, 74px);
+  border-block-end: 1px solid #f0f1f2;
+}
+.table tbody tr:hover {
+  background: #f4f4f4;
+}
+.table td,
+.table tbody th {
+  padding: 5px 10px;
+  font-weight: 400;
+}
+.table .identityCell {
+  text-align: start;
+  padding-inline-start: 4px;
+}
+.identity {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-inline-size: 0;
+}
+.securityText {
+  display: flex;
+  flex-direction: column;
+  min-inline-size: 0;
+  line-height: 1.25;
+}
+.symbol {
+  align-self: start;
+  font-size: var(--font-body);
+}
+.description {
+  display: block;
+  font-size: clamp(9px, 0.6vw, 11px);
+  color: #777c7e;
+  max-inline-size: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.price {
+  display: inline-flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+.unit {
+  color: #a1a7aa;
+  font-size: 9px;
+}
+.up {
+  color: var(--color-positive);
+}
+.down {
+  color: var(--color-negative);
+}
+.unchanged {
+  color: var(--color-text-muted);
+}
+.returnBadge {
+  display: inline-block;
+  min-inline-size: 63px;
+  padding: 1px 6px;
+  border-radius: 3px;
+  line-height: 1.35;
+  font-size: var(--font-small);
+  background: #f0f2f3;
+}
+.returnBadge.up {
+  background: #e0f2ed;
+}
+.returnBadge.down {
+  background: #f7e6e9;
+}
+.rowActions {
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  inline-size: 24px;
+  block-size: 24px;
+  background: #f0f2f5;
+  color: #89949b;
+  margin-inline: auto;
+  padding: 4px;
+}
+.rowActions svg {
+  inline-size: 13px;
+  block-size: 13px;
+}
+.trendHeading {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.trendHeading svg {
+  inline-size: 11px;
+  block-size: 11px;
+  stroke-width: 1.4;
+}
+@media (max-width: 1100px) {
+  .table td,
+  .table tbody th {
+    padding-inline: 7px;
+  }
+}
+@media (max-width: 760px) {
+  .table {
+    min-inline-size: 960px;
+  }
+  .table .identityCell {
+    position: sticky;
+    inset-inline-start: 0;
+    background: white;
+    z-index: 1;
+    padding-inline-start: 8px;
+    box-shadow: -3px 0 6px #20304008;
+  }
+  .table thead .identityCell {
+    background: #f6f6f6;
+  }
+  .table tbody tr:hover .identityCell {
+    background: #f4f4f4;
+  }
+  .identityColumn {
+    width: 19%;
+  }
+  .priceColumn {
+    width: 12%;
+  }
+  .returnColumn {
+    width: 12%;
+  }
+  .volumeColumn {
+    width: 10%;
+  }
+  .chartColumn {
+    width: 11%;
+  }
+}

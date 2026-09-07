@@ -1,0 +1,67 @@
+.sparkline {
+  display: block;
+  inline-size: 100%;
+  block-size: 36px;
+  overflow: visible;
+}
+.up {
+  color: var(--color-positive);
+}
+.down {
+  color: var(--color-negative);
+}
+.unchanged {
+  color: var(--color-text-muted);
+}
+.unavailable {
+  display: block;
+  text-align: center;
+  color: var(--color-text-muted);
+}
+.dailyRange {
+  inline-size: 100%;
+  padding-block-start: 7px;
+}
+.rangeTrack {
+  position: relative;
+  block-size: 9px;
+  background: #e8e9eb;
+  border-radius: 1px;
+}
+.rangeFill {
+  display: block;
+  block-size: 100%;
+  inline-size: var(--position);
+  background: linear-gradient(90deg, #263e54, #83a7bb);
+  border-radius: inherit;
+}
+.rangeMarker {
+  position: absolute;
+  top: -7px;
+  left: clamp(3px, var(--position), calc(100% - 3px));
+  transform: translateX(-50%);
+  inline-size: 7px;
+  block-size: 5px;
+  background: #233b4b;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+.rangeLabels {
+  display: flex;
+  justify-content: space-between;
+  gap: 3px;
+  font-size: 9px;
+  font-variant-numeric: tabular-nums;
+  color: #73797c;
+  line-height: 1.6;
+}
+.trendBar {
+  display: flex;
+  justify-content: center;
+  gap: 2px;
+}
+.trendBar span {
+  display: block;
+  inline-size: 4px;
+  block-size: 15px;
+  background: currentColor;
+}
