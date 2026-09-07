@@ -1,7 +1,8 @@
 import { useRef, useState } from 'react'
 import { useShallow } from 'zustand/react/shallow'
-import { ListFilter, Plus, SlidersHorizontal } from 'lucide-react'
+import { Plus, SlidersHorizontal } from 'lucide-react'
 import { useWatchlist } from '../state/useWatchlist'
+import { ListActions } from './ListActions'
 import { WatchlistSelector } from './WatchlistSelector'
 import { AddSecurityDialog } from './AddSecurityDialog'
 import { WatchlistSkeleton } from './WatchlistSkeleton'
@@ -70,13 +71,7 @@ export function WatchlistPage() {
             <span>הוסף נייר</span>
             <Plus aria-hidden="true" />
           </button>
-          <button
-            className={styles.listActions}
-            disabled
-            aria-label="פעולות רשימה"
-          >
-            <ListFilter aria-hidden="true" />
-          </button>
+          <ListActions />
         </div>
       </div>
       {filtersOpen && <WatchlistFilters />}

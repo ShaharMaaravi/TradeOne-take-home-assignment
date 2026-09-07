@@ -27,6 +27,10 @@ export interface WatchlistState {
     instrumentId: string,
     included: boolean,
   ) => void
+  saveList: (id: string, instrumentIds: readonly string[]) => void
+  renameList: (id: string, name: string) => boolean
+  setDefaultList: (id: string) => void
+  deleteList: (id: string) => void
   dismissToast: (id: number) => void
   filters: WatchlistFilters
   sort: SortDescriptor
@@ -97,6 +101,105 @@ export function createWatchlistStore(isPlaying = true) {
             id: toastVersion,
             message: `${instrument.symbol} ${included ? 'נוסף לרשימת' : 'הוסר מרשימת'} המעקב ״${list.name}״`,
           },
+        }
+      }),
+    saveList: (id, instrumentIds) =>
+      set((state) => {
+        const list = state.market.watchlists.find((item) => item.id === id)
+        if (
+          !list ||
+          new Set(instrumentIds).size !== instrumentIds.length ||
+          instrumentIds.some((key) => !list.instrumentIds.includes(key))
+        )
+          return state
+        const version = state.toastVersion + 1
+        return {
+          market: {
+            ...state.market,
+            watchlists: state.market.watchlists.map((item) =>
+              item.id === id
+                ? { ...item, instrumentIds: [...instrumentIds] }
+                : item,
+            ),
+          },
+          sort: null,
+          toastVersion: version,
+          toast: { id: version, message: 'הרשימה נשמרה' },
+        }
+      }),
+    renameList: (id, value) => {
+      let accepted = false
+      set((state) => {
+        const name = value.trim()
+        if (
+          !name ||
+          name.length > 40 ||
+          !state.market.watchlists.some((item) => item.id === id) ||
+          state.market.watchlists.some(
+            (item) =>
+              item.id !== id &&
+              item.name.toLocaleLowerCase() === name.toLocaleLowerCase(),
+          )
+        )
+          return state
+        accepted = true
+        const version = state.toastVersion + 1
+        return {
+          market: {
+            ...state.market,
+            watchlists: state.market.watchlists.map((item) =>
+              item.id === id ? { ...item, name } : item,
+            ),
+          },
+          toastVersion: version,
+          toast: { id: version, message: 'שם הרשימה עודכן' },
+        }
+      })
+      return accepted
+    },
+    setDefaultList: (id) =>
+      set((state) => {
+        if (
+          state.market.defaultWatchlistId === id ||
+          !state.market.watchlists.some((item) => item.id === id)
+        )
+          return state
+        const version = state.toastVersion + 1
+        return {
+          market: { ...state.market, defaultWatchlistId: id },
+          toastVersion: version,
+          toast: { id: version, message: 'רשימת ברירת המחדל עודכנה' },
+        }
+      }),
+    deleteList: (id) =>
+      set((state) => {
+        if (
+          state.market.watchlists.length <= 1 ||
+          !state.market.watchlists.some((item) => item.id === id)
+        )
+          return state
+        const watchlists = state.market.watchlists.filter(
+          (item) => item.id !== id,
+        )
+        const defaultWatchlistId =
+          state.market.defaultWatchlistId === id
+            ? watchlists[0]!.id
+            : state.market.defaultWatchlistId
+        const version = state.toastVersion + 1
+        return {
+          market: {
+            ...state.market,
+            watchlists,
+            defaultWatchlistId,
+            activeWatchlistId:
+              state.market.activeWatchlistId === id
+                ? defaultWatchlistId
+                : state.market.activeWatchlistId,
+          },
+          isSwitching: false,
+          listLoadVersion: state.listLoadVersion + 1,
+          toastVersion: version,
+          toast: { id: version, message: 'הרשימה נמחקה' },
         }
       }),
     filters: { ...DEFAULT_FILTERS },

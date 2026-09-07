@@ -4,6 +4,8 @@ import type { ReactNode, RefObject } from 'react'
 import styles from './Modal.module.css'
 
 interface ModalProps {
+  className?: string
+  onEscapeKeyDown?: (event: KeyboardEvent) => void
   open: boolean
   onOpenChange: (open: boolean) => void
   title: string
@@ -14,6 +16,8 @@ interface ModalProps {
 }
 
 export function Modal({
+  className,
+  onEscapeKeyDown,
   open,
   onOpenChange,
   title,
@@ -27,7 +31,8 @@ export function Modal({
       <Dialog.Portal>
         <Dialog.Overlay className={styles.overlay} />
         <Dialog.Content
-          className={styles.content}
+          className={[styles.content, className].filter(Boolean).join(' ')}
+          onEscapeKeyDown={onEscapeKeyDown}
           dir="rtl"
           onOpenAutoFocus={(event) => {
             if (initialFocusRef?.current) {

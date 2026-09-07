@@ -1,0 +1,106 @@
+.title {
+  margin: 0 0 20px;
+  font-size: 20px;
+  color: #242a2f;
+}
+.hint {
+  color: #71838e;
+  font-size: 13px;
+}
+.rows {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0;
+  max-height: min(440px, 48svh);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 58px;
+  padding: 6px;
+  background: white;
+  position: relative;
+}
+.row:hover {
+  background: #edf0f2;
+}
+.identity {
+  flex: 1;
+  min-width: 0;
+  font-size: 14px;
+}
+.identity small {
+  display: block;
+  color: #7b8890;
+  font-size: 11px;
+}
+.row button {
+  border: 0;
+  background: transparent;
+  padding: 10px;
+  display: grid;
+  place-items: center;
+}
+.remove,
+.danger {
+  color: #bc3345;
+}
+.handle {
+  touch-action: none;
+  cursor: grab;
+  color: #7793a1;
+}
+.handle:active {
+  cursor: grabbing;
+}
+.footer {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  padding-top: 18px;
+}
+.footer button {
+  border: 1px solid #d4dce1;
+  border-radius: 5px;
+  min-height: 38px;
+  padding: 8px 24px;
+  background: white;
+}
+.footer .primary {
+  background: var(--color-primary);
+  color: white;
+  border-color: transparent;
+}
+.footer .delete {
+  background: #b52f43;
+  color: white;
+  border-color: transparent;
+}
+.footer button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.label {
+  display: grid;
+  gap: 8px;
+}
+.label input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #cbd5dc;
+  border-radius: 5px;
+  background: white;
+}
+@media (prefers-reduced-motion: reduce) {
+  .row {
+    transition: none !important;
+  }
+}
+
+.editor {
+  width: min(420px, calc(100vw - 32px));
+  background: white;
+}

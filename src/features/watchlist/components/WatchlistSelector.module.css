@@ -60,3 +60,8 @@
   inline-size: 12px;
   block-size: 12px;
 }
+
+.item[data-disabled] {
+  opacity: 0.45;
+  cursor: default;
+}

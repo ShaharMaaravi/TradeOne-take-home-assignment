@@ -5,14 +5,10 @@ All market data will be simulated locally; no external market API is required.
 
 ## Current checkpoint
 
-Step 6: list selection and adding securities. The list dropdown switches between
-four example lists with a short loading skeleton. Add Security opens a searchable
-catalogue with category tabs and heart buttons for immediate membership changes.
-Empty lists offer an Add First Security action. Sorting, filtering, and live quote
-updates continue to work with these interactions.
-
-List editing, drag-and-drop ordering, rename/default/delete actions are planned
-for step 7. Changes currently reset on refresh.
+Step 7: list editing and management. Open List Actions to reorder/remove securities
+in a draft editor, rename a list, set its default status, or confirm deletion.
+Changes in the editor take effect only on Save; Cancel discards the draft.
+Changes currently reset on refresh.
 
 ## Run locally
 
@@ -77,7 +73,7 @@ Radix Dropdown Menu and Tabs for keyboard and focus behavior.
 - React Strict Mode stays enabled to expose effect lifecycle problems early.
 - Oxlint is the linter supplied by the current Vite template.
 - Zustand provides quote-level subscriptions; each app instance owns its store.
-- dnd-kit will be added when list editing is built.
+- dnd-kit supplies pointer and keyboard sorting in the draft list editor.
 
 Repository: https://github.com/ShaharMaaravi/TradeOne-take-home-assignment
 
@@ -200,3 +196,23 @@ The modal traps keyboard focus, closes with Escape, and restores focus to its
 opener. If the empty-list action disappears after adding, focus returns to the
 main Add Security button. The result list scrolls inside the mobile viewport.
 Membership, list selection, sorting, and filters are in-memory only.
+
+## List editing and management
+
+The editor always opens in saved manual order, including securities hidden by
+filters. Drag the handle with a pointer, or focus it and press Space, use arrow
+keys, then press Space to drop. Escape cancels an active drag; a subsequent Escape
+closes the editor. Remove buttons affect only the draft. Save applies the new
+membership/order and clears column sorting so the saved order is visible; filters
+remain active. Cancel, closing, or clicking outside discards unsaved edits. Quote
+updates continue independently and are never replaced by a saved draft.
+
+Names are trimmed, limited to 40 characters, and must be nonempty and unique
+(case-insensitive). Setting the default updates the session's default list. Deleting
+the active list selects the surviving default; deleting the default assigns the
+first remaining list. The final list cannot be deleted. Deletion requires an
+in-app confirmation, initially focused on Cancel. All of this state is local to
+the current session; there is no persistence across reloads yet.
+
+Tests cover draft cancellation, removal, pointer/keyboard sorting, Escape during
+a drag, name validation, default/deletion fallback, and protection of the last list.
