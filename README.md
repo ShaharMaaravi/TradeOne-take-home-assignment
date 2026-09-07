@@ -5,9 +5,10 @@ All market data will be simulated locally; no external market API is required.
 
 ## Current checkpoint
 
-Step 7: list editing and management. Open List Actions to reorder/remove securities
-in a draft editor, rename a list, set its default status, or confirm deletion.
-Changes in the editor take effect only on Save; Cancel discards the draft.
+Step 8: responsive layout and accessibility refinement. Mobile navigation is
+available through a focus-managed drawer, the toolbar reflows at 320px, and the
+market ticker supports horizontal keyboard/touch scrolling. Text and price colors
+have stronger contrast; removal from the draft editor preserves keyboard focus.
 Changes currently reset on refresh.
 
 ## Run locally
@@ -116,8 +117,8 @@ The desktop proportions follow the supplied 832×464 recording, reviewed at a
 1664×928 viewport. Assistant is bundled locally as a close Hebrew font match;
 the recording does not identify the original font. Spacing scales within bounded
 sizes. The table keeps all columns in a horizontal scroller on narrow screens,
-with a sticky security identity column. More extensive mobile navigation and
-accessibility refinement remains planned for step 8.
+with a sticky security identity column. Mobile navigation uses a drawer below 761px; the toolbar stacks on the narrowest
+screens and the ticker scrolls independently.
 
 The PDF requires absolute change, so the table includes a separate change column
 in addition to percentage change. Amot was added to the mock catalogue to match
@@ -216,3 +217,27 @@ the current session; there is no persistence across reloads yet.
 
 Tests cover draft cancellation, removal, pointer/keyboard sorting, Escape during
 a drag, name validation, default/deletion fallback, and protection of the last list.
+
+## Responsive layout and accessibility
+
+The desktop sidebar becomes a modal navigation drawer below 761px. Escape closes
+it and restores focus; resizing to desktop closes it and focuses the watchlist.
+Only the watchlist destination is active in this standalone clone. The 320px
+layout stacks toolbar groups, and long list names truncate within their control.
+Mobile add/filter/list controls and catalogue hearts have larger touch targets.
+Dialogs can scroll in short viewports, including landscape/keyboard-sized views.
+The table retains all columns in its own horizontal scroller with sticky identity
+cells; the market ticker has a separate keyboard-focusable scroll region.
+
+Secondary text and financial colors are deliberately darker than the video to
+improve contrast. Positive/negative values retain explicit signs. Existing focus
+outlines, RTL labels, reduced-motion support and skip navigation remain enabled.
+Removing an editor row focuses the next removal button (or previous at the end);
+removing the last row focuses Save. A polite status message announces the removal.
+
+Playwright runs axe WCAG A/AA checks on the page, add/edit/rename/delete dialogs,
+and mobile navigation. Additional tests cover 320/390/768px layouts, a short
+landscape viewport, drawer focus wrapping and resize cleanup, ticker keyboard
+scrolling, and focus after removing all draft rows. Automated checks do not replace
+manual assistive-technology testing; no screen-reader compatibility certification
+is claimed.

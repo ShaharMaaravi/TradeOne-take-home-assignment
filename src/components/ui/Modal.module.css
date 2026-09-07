@@ -20,6 +20,8 @@
   box-shadow: 0 16px 50px #0002;
   padding: 48px 32px 24px;
   outline: none;
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 .close {
   position: absolute;
@@ -27,8 +29,8 @@
   inset-inline-end: 13px;
   display: grid;
   place-items: center;
-  inline-size: 25px;
-  block-size: 25px;
+  inline-size: 32px;
+  block-size: 32px;
   border: 0;
   border-radius: 50%;
   color: #6d8a9e;

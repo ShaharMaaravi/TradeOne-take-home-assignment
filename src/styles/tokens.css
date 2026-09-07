@@ -3,10 +3,10 @@
   --color-surface: #ffffff;
   --color-surface-muted: #f5f6f7;
   --color-text: #34383a;
-  --color-text-muted: #7c8286;
+  --color-text-muted: #606b72;
   --color-border: #edf0f2;
-  --color-positive: #369989;
-  --color-negative: #c26977;
+  --color-positive: #217467;
+  --color-negative: #a53f52;
   --font-body: clamp(12px, 0.78vw, 14px);
   --font-small: clamp(10px, 0.66vw, 12px);
 }

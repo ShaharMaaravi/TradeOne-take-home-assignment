@@ -45,7 +45,7 @@
 }
 .table thead {
   background: #f6f6f6;
-  color: #737779;
+  color: #62686c;
 }
 .table thead th {
   block-size: 30px;
@@ -89,7 +89,7 @@
 .description {
   display: block;
   font-size: clamp(9px, 0.6vw, 11px);
-  color: #777c7e;
+  color: #646d72;
   max-inline-size: 100%;
   text-overflow: ellipsis;
   overflow: hidden;

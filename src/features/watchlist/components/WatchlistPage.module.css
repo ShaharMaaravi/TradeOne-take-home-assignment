@@ -89,3 +89,43 @@
   background: var(--color-primary);
   font-size: 9px;
 }
+
+.listSelector {
+  max-inline-size: min(320px, 45%);
+}
+.listSelector bdi {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.listSelector svg {
+  flex-shrink: 0;
+}
+@media (max-width: 760px) {
+  .toolbar {
+    block-size: auto;
+    min-block-size: 76px;
+    flex-wrap: wrap;
+    padding-block: 10px;
+  }
+  .listActions {
+    inline-size: 40px;
+    block-size: 40px;
+  }
+  .listSelector,
+  .addButton {
+    min-block-size: 44px;
+  }
+}
+@media (max-width: 380px) {
+  .toolbar {
+    gap: 8px;
+  }
+  .listSelector {
+    max-inline-size: 100%;
+    inline-size: 100%;
+  }
+  .toolbarActions {
+    margin-inline-start: auto;
+  }
+}

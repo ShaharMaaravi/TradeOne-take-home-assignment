@@ -1,10 +1,14 @@
 import { ChevronDown, Search, UserRound } from 'lucide-react'
+import { MobileNavigation } from './MobileNavigation'
 import styles from './AppShell.module.css'
 
 export function TopBar() {
   return (
     <header className={styles.topbar}>
-      <h1 id="watchlist-title">רשימות מעקב</h1>
+      <div className={styles.headingGroup}>
+        <MobileNavigation />
+        <h1 id="watchlist-title">רשימות מעקב</h1>
+      </div>
       <div className={styles.globalSearch}>
         <Search aria-hidden="true" />
         <input

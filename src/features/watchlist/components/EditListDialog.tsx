@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import {
   DndContext,
   KeyboardSensor,
@@ -24,8 +24,10 @@ import styles from './ListEditing.module.css'
 function EditableRow({
   instrument,
   onRemove,
+  removeRef,
 }: {
   instrument: Instrument
+  removeRef: (node: HTMLButtonElement | null) => void
   onRemove: () => void
 }) {
   const {
@@ -49,6 +51,7 @@ function EditableRow({
       }}
     >
       <button
+        ref={removeRef}
         className={styles.remove}
         onClick={onRemove}
         aria-label={`הסר ${instrument.symbol}`}
@@ -81,6 +84,9 @@ export function EditListDialog({
   onClose: () => void
   restoreFocus: () => void
 }) {
+  const removeButtons = useRef(new Map<string, HTMLButtonElement>())
+  const saveButton = useRef<HTMLButtonElement>(null)
+  const [announcement, setAnnouncement] = useState('')
   const [dragging, setDragging] = useState(false)
   const [ids, setIds] = useState([...list.instrumentIds])
   const instruments = useWatchlist((s) => s.market.instruments)
@@ -146,17 +152,32 @@ export function EditListDialog({
               <EditableRow
                 key={id}
                 instrument={instruments.find((item) => item.id === id)!}
-                onRemove={() =>
+                removeRef={(node) => {
+                  if (node) removeButtons.current.set(id, node)
+                  else removeButtons.current.delete(id)
+                }}
+                onRemove={() => {
+                  const index = ids.indexOf(id)
+                  const next = ids[index + 1] ?? ids[index - 1]
                   setIds((current) => current.filter((key) => key !== id))
-                }
+                  setAnnouncement(
+                    `${instruments.find((item) => item.id === id)!.symbol} הוסר מהטיוטה`,
+                  )
+                  if (next) removeButtons.current.get(next)?.focus()
+                  else requestAnimationFrame(() => saveButton.current?.focus())
+                }}
               />
             ))}
           </ul>
         </SortableContext>
       </DndContext>
+      <p className="sr-only" role="status" aria-label="עדכון טיוטה">
+        {announcement}
+      </p>
       {ids.length === 0 && <p>אין ניירות ברשימה</p>}
       <div className={styles.footer}>
         <button
+          ref={saveButton}
           className={styles.primary}
           disabled={!dirty}
           onClick={() => {

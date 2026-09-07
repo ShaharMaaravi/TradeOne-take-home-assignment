@@ -14,6 +14,7 @@ import {
   Search,
   Wallet,
 } from 'lucide-react'
+import { useId } from 'react'
 import type { LucideIcon } from 'lucide-react'
 import styles from './AppShell.module.css'
 
@@ -34,12 +35,23 @@ const navigation: {
   { label: 'הפקדת ניירות ערך', icon: ArrowLeftRight },
 ]
 
-export function NavigationSidebar() {
+export function NavigationSidebar({
+  mobile = false,
+  onNavigate,
+}: {
+  mobile?: boolean
+  onNavigate?: () => void
+}) {
+  const referralId = useId()
   return (
-    <aside className={styles.sidebar} aria-label="סרגל צד">
+    <aside
+      className={`${styles.sidebar} ${mobile ? styles.mobileSidebar : ''}`}
+      aria-label="סרגל צד"
+    >
       <a
         className={styles.brand}
         href="#watchlist"
+        onClick={onNavigate}
         aria-label="פסגות טרייד — רשימות מעקב"
       >
         <span className={styles.brandMark} aria-hidden="true" />
@@ -52,6 +64,7 @@ export function NavigationSidebar() {
               key={label}
               className={`${styles.navItem} ${styles.selected}`}
               href="#watchlist"
+              onClick={onNavigate}
               aria-current="page"
             >
               <Icon aria-hidden="true" fill="currentColor" />
@@ -81,8 +94,8 @@ export function NavigationSidebar() {
           <span>פרטי מסגרת החשבון</span>
         </button>
       </nav>
-      <section className={styles.referral} aria-labelledby="referral-title">
-        <h2 id="referral-title">חבר מביא חבר</h2>
+      <section className={styles.referral} aria-labelledby={referralId}>
+        <h2 id={referralId}>חבר מביא חבר</h2>
         <p>
           נהנים לסחור איתנו? גם לחברים שלכם מגיע! הזמינו חברים והתחילו ליהנות
           מההטבות.

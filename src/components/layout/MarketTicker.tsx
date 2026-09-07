@@ -25,7 +25,12 @@ export function MarketTicker() {
           <ChevronLeft aria-hidden="true" />
         </button>
       </div>
-      <div className={styles.tickerTrack}>
+      <div
+        className={styles.tickerTrack}
+        role="region"
+        aria-label="גלילת מדדי שוק"
+        tabIndex={0}
+      >
         {indices.map((index) => (
           <div className={styles.tickerItem} key={index.name}>
             <span className={styles.indexLogo} aria-hidden="true">

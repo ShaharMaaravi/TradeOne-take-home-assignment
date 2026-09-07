@@ -233,7 +233,7 @@
   border-block-start: 1px solid var(--color-border);
   z-index: 15;
   font-size: 10px;
-  color: #91979c;
+  color: #626d74;
 }
 .poweredBy {
   display: flex;
@@ -271,7 +271,7 @@
   justify-content: space-around;
   align-items: center;
   flex-shrink: 0;
-  color: #7f878e;
+  color: #626d74;
   font-size: var(--font-small);
 }
 .marketPicker button {
@@ -317,7 +317,7 @@
   font-size: 10px;
 }
 .indexNumbers > span {
-  color: #85898d;
+  color: #626d74;
 }
 .indexNumbers > div {
   display: flex;
@@ -423,5 +423,109 @@
   }
   .brand {
     margin-block-end: 12px;
+  }
+}
+
+.headingGroup {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-inline-size: 0;
+}
+.mobileMenuButton {
+  display: none;
+}
+.drawerOverlay {
+  position: fixed;
+  inset: 0;
+  background: #0008;
+  z-index: 100;
+}
+.drawer {
+  position: fixed;
+  inset-block: 0;
+  inset-inline-start: 0;
+  inline-size: min(300px, calc(100vw - 32px));
+  background: white;
+  z-index: 101;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-block-start: 48px;
+}
+.drawerClose {
+  position: absolute;
+  inset-block-start: 8px;
+  inset-inline-end: 8px;
+  display: grid;
+  place-items: center;
+  inline-size: 40px;
+  block-size: 40px;
+  border: 0;
+  border-radius: 50%;
+  background: #f2f5f6;
+  color: var(--color-primary);
+}
+.sidebar.mobileSidebar {
+  display: flex;
+  position: static;
+  inline-size: 100%;
+  padding-top: 0;
+  border: 0;
+}
+.mobileSidebar .navItem {
+  min-block-size: 44px;
+  font-size: 14px;
+}
+.mobileSidebar .navHeading {
+  font-size: 13px;
+}
+.mobileSidebar .referral {
+  margin-block-start: 24px;
+}
+@media (max-width: 760px) {
+  .mobileMenuButton {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    inline-size: 40px;
+    block-size: 40px;
+    border: 0;
+    border-radius: 50%;
+    background: #f2f5f6;
+    color: var(--color-primary);
+  }
+  .mobileMenuButton svg {
+    inline-size: 21px;
+  }
+  .tickerTrack {
+    overflow-x: auto;
+    scrollbar-width: thin;
+    overscroll-behavior-inline: contain;
+  }
+  .statusBar {
+    font-size: 10px;
+    padding-inline: 8px;
+  }
+  .poweredBy {
+    gap: 4px;
+  }
+  .providerMark {
+    display: none;
+  }
+}
+@media (max-width: 380px) {
+  .topbar {
+    gap: 6px;
+  }
+  .topbar h1 {
+    font-size: 18px;
+  }
+  .account {
+    gap: 4px;
+    padding: 3px 6px;
+  }
+  .account > svg,
+  .avatar {
+    display: none;
   }
 }
