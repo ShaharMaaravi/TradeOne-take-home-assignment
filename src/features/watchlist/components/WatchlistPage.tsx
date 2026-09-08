@@ -46,7 +46,12 @@ export function WatchlistPage() {
       )!,
   )
   return (
-    <main id="watchlist" tabIndex={-1} aria-labelledby="watchlist-title">
+    <main
+      className={styles.page}
+      id="watchlist"
+      tabIndex={-1}
+      aria-labelledby="watchlist-title"
+    >
       <div className={styles.toolbar}>
         <WatchlistSelector />
         <div className={styles.toolbarActions}>
@@ -78,7 +83,7 @@ export function WatchlistPage() {
         </div>
       </div>
       {filtersOpen && <WatchlistFilters />}
-      <div aria-busy={isSwitching}>
+      <div className={styles.results} aria-busy={isSwitching}>
         {isSwitching ? (
           <WatchlistSkeleton />
         ) : loadError ? (

@@ -1,4 +1,5 @@
 import { Ellipsis } from 'lucide-react'
+import type { CSSProperties } from 'react'
 import type { Instrument, InstrumentId } from '../domain/types'
 import { getQuoteMetrics } from '../domain/calculations'
 import { formatChange, formatPercent, formatVolume } from '../domain/formatters'
@@ -100,7 +101,11 @@ export function WatchlistTable({
       aria-label="טבלת רשימת מעקב"
       tabIndex={0}
     >
-      <table className={styles.table}>
+      <table
+        className={styles.table}
+        data-fill={instrumentIds.length >= 6}
+        style={{ '--row-count': instrumentIds.length } as CSSProperties}
+      >
         <caption className="sr-only">
           ניירות הערך ברשימת המעקב — נתוני הדגמה
         </caption>

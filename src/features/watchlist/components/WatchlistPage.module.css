@@ -129,3 +129,18 @@
     margin-inline-start: auto;
   }
 }
+
+.page {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-block-size: 0;
+}
+.toolbar {
+  flex-shrink: 0;
+}
+.results {
+  flex: 1;
+  min-block-size: 160px;
+  padding-block-end: 8px;
+}

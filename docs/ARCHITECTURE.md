@@ -191,3 +191,25 @@ Use `npm run test:e2e -- --project=chromium` for Chromium-only checks.
 Visual review compared the 1664×928 desktop screenshot against the supplied
 recording and inspected the recovery state. The deliberate visual differences
 listed above remain. Cross-session persistence is not implemented. Netlify setup is documented in [DEPLOYMENT.md](DEPLOYMENT.md).
+
+## Full-screen layout and smooth updates
+
+Following review, the workspace uses narrow fluid gutters and fills the dynamic
+viewport height above the fixed status/ticker bars. The table scrolls internally
+with sticky column headings. Lists with six or more visible rows fill the panel;
+shorter lists keep compact rows within the full-height panel. Filters reserve their
+own space, with ordinary page overflow retained for exceptionally short screens.
+The ticker distributes its four items across available width and scrolls on narrow
+screens. These changes intentionally use more screen space than the source video.
+
+Quote generation still runs every 1,500 ms. Sparkline shapes interpolate for 300 ms
+between incoming values using requestAnimationFrame and SVG refs; no React state
+updates or layout reads occur on animation frames. Changing series lengths
+resamples the prior shape for interpolation. Animations cancel on unmount and
+retarget from their current shape if another update arrives. Reduced motion and
+hidden tabs apply the target immediately. Daily-range fills animate with a transform.
+Numeric values continue to show the actual latest mock quote without interpolation.
+
+A six-second headless Chromium baseline at 1664×928 showed a 95th-percentile frame
+interval of about 16.8 ms and no long tasks. This is a local diagnostic, not a
+hardware-independent FPS guarantee; the changes address abrupt visual updates.

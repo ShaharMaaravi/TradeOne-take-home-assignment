@@ -41,7 +41,9 @@ npm run preview
 
 Keyboard reordering: focus a drag handle, press Space, use arrow keys, then Space
 to drop. Escape cancels a drag before closing the editor. On mobile, the table
-and ticker scroll horizontally and navigation opens in a drawer.
+and ticker scroll horizontally and navigation opens in a drawer. The list panel
+fills the available viewport width and height, with internal table scrolling and
+smooth chart/range transitions between quote updates.
 
 ## Stack and structure
 

@@ -1,6 +1,8 @@
 .tableScroll {
   position: relative;
-  overflow-x: auto;
+  overflow: auto;
+  block-size: 100%;
+  overscroll-behavior: contain;
   scrollbar-width: thin;
   scrollbar-color: #bdc9d0 transparent;
 }
@@ -55,7 +57,7 @@
   padding: 4px 6px;
 }
 .table tbody tr {
-  block-size: clamp(54px, 3.85vw, 74px);
+  block-size: 54px;
   border-block-end: 1px solid #f0f1f2;
 }
 .table tbody tr:hover {
@@ -206,4 +208,26 @@
 }
 .sortButton[data-active='true'] {
   color: var(--color-primary);
+}
+
+.table[data-fill='true'] {
+  block-size: 100%;
+  min-block-size: calc(30px + var(--row-count) * 54px);
+}
+.table thead th {
+  position: sticky;
+  inset-block-start: 0;
+  background: #f6f6f6;
+  z-index: 2;
+}
+.table thead .identityCell {
+  z-index: 3;
+}
+.table tbody tr {
+  transition: background-color 140ms ease-out;
+}
+@media (prefers-reduced-motion: reduce) {
+  .table tbody tr {
+    transition: none;
+  }
 }

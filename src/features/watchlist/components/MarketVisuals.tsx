@@ -1,4 +1,5 @@
 import { useId } from 'react'
+import { useSparklineMotion } from './useSparklineMotion'
 import type { CSSProperties } from 'react'
 import type { Direction, Quote } from '../domain/types'
 import { formatPrice } from '../domain/formatters'
@@ -19,7 +20,6 @@ export function Sparkline({
   label,
   filled = true,
 }: SparklineProps) {
-  const gradientId = useId()
   if (prices.length === 0 || prices.some((price) => !Number.isFinite(price))) {
     return (
       <span className={styles.unavailable} aria-label={`${label}: אין נתונים`}>
@@ -27,6 +27,18 @@ export function Sparkline({
       </span>
     )
   }
+  return (
+    <SparklineChart
+      prices={prices}
+      direction={direction}
+      label={label}
+      filled={filled}
+    />
+  )
+}
+
+function SparklineChart({ prices, direction, label, filled }: SparklineProps) {
+  const gradientId = useId()
   const low = Math.min(...prices)
   const high = Math.max(...prices)
   const coordinates = prices.map((price, index) => [
@@ -34,6 +46,7 @@ export function Sparkline({
     high === low ? 20 : 35 - ((price - low) / (high - low)) * 30,
   ])
   const points = coordinates.map(([x, y]) => `${x},${y}`).join(' ')
+  const { lineRef, areaRef } = useSparklineMotion(points)
   return (
     <svg
       viewBox="0 0 100 42"
@@ -49,6 +62,7 @@ export function Sparkline({
       </defs>
       {filled && (
         <path
+          ref={areaRef}
           d={`M 2,40 L ${coordinates.map(([x, y]) => `${x},${y}`).join(' L ')} L 98,40 Z`}
           fill={`url(#${gradientId})`}
         />
@@ -66,6 +80,7 @@ export function Sparkline({
         <circle cx="50" cy="20" r="2" fill="currentColor" />
       ) : (
         <polyline
+          ref={lineRef}
           points={points}
           fill="none"
           stroke="currentColor"
@@ -95,7 +110,12 @@ export function DailyRangeBar({
     >
       <div
         className={styles.rangeTrack}
-        style={{ '--position': `${(position ?? 0.5) * 100}%` } as CSSProperties}
+        style={
+          {
+            '--position': `${(position ?? 0.5) * 100}%`,
+            '--range-scale': position ?? 0.5,
+          } as CSSProperties
+        }
       >
         <span className={styles.rangeFill} />
         <span className={styles.rangeMarker} />

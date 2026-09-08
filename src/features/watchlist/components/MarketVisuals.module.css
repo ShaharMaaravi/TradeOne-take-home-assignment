@@ -31,7 +31,10 @@
 .rangeFill {
   display: block;
   block-size: 100%;
-  inline-size: var(--position);
+  inline-size: 100%;
+  transform: scaleX(var(--range-scale));
+  transform-origin: left center;
+  transition: transform 300ms ease-out;
   background: linear-gradient(90deg, #263e54, #83a7bb);
   border-radius: inherit;
 }
@@ -64,4 +67,20 @@
   inline-size: 4px;
   block-size: 15px;
   background: currentColor;
+}
+
+.rangeMarker {
+  transition: left 300ms ease-out;
+}
+.sparkline,
+.trendBar span {
+  transition: color 180ms ease-out;
+}
+@media (prefers-reduced-motion: reduce) {
+  .rangeFill,
+  .rangeMarker,
+  .sparkline,
+  .trendBar span {
+    transition: none;
+  }
 }

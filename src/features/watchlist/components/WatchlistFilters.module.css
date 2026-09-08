@@ -71,3 +71,7 @@
     flex-basis: 100%;
   }
 }
+
+.filters {
+  flex-shrink: 0;
+}
