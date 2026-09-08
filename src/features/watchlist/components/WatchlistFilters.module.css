@@ -62,7 +62,7 @@
 .reset:disabled {
   color: #9ca7ae;
 }
-@media (max-width: 760px) {
+@media (max-width: 1199px) {
   .filters {
     gap: 10px;
     padding: 12px;

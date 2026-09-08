@@ -11,6 +11,7 @@ interface SparklineProps {
   direction: Direction
   label: string
   filled?: boolean
+  stretch?: boolean
 }
 
 /** Prices progress left to right, regardless of the page's text direction. */
@@ -19,6 +20,7 @@ export function Sparkline({
   direction,
   label,
   filled = true,
+  stretch = false,
 }: SparklineProps) {
   if (prices.length === 0 || prices.some((price) => !Number.isFinite(price))) {
     return (
@@ -33,11 +35,18 @@ export function Sparkline({
       direction={direction}
       label={label}
       filled={filled}
+      stretch={stretch}
     />
   )
 }
 
-function SparklineChart({ prices, direction, label, filled }: SparklineProps) {
+function SparklineChart({
+  prices,
+  direction,
+  label,
+  filled,
+  stretch,
+}: SparklineProps) {
   const gradientId = useId()
   const low = Math.min(...prices)
   const high = Math.max(...prices)
@@ -50,6 +59,7 @@ function SparklineChart({ prices, direction, label, filled }: SparklineProps) {
   return (
     <svg
       viewBox="0 0 100 42"
+      preserveAspectRatio={stretch ? 'none' : undefined}
       className={`${styles.sparkline} ${styles[direction]}`}
       role="img"
       aria-label={label}
@@ -85,6 +95,7 @@ function SparklineChart({ prices, direction, label, filled }: SparklineProps) {
           fill="none"
           stroke="currentColor"
           strokeWidth="1.3"
+          vectorEffect="non-scaling-stroke"
           strokeLinejoin="round"
           strokeLinecap="round"
         />

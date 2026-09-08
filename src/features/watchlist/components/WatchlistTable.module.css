@@ -11,7 +11,7 @@
   min-inline-size: 850px;
   table-layout: fixed;
   border-collapse: collapse;
-  text-align: center;
+  text-align: right;
   font-size: var(--font-body);
   font-variant-numeric: tabular-nums;
 }
@@ -69,7 +69,7 @@
   font-weight: 400;
 }
 .table .identityCell {
-  text-align: start;
+  text-align: right;
   padding-inline-start: 4px;
 }
 .identity {
@@ -130,7 +130,7 @@
   block-size: 24px;
   background: #f0f2f5;
   color: #89949b;
-  margin-inline: auto;
+  margin-inline: 0;
   padding: 4px;
 }
 .rowActions svg {
@@ -142,47 +142,6 @@
   block-size: 11px;
   stroke-width: 1.4;
 }
-@media (max-width: 1100px) {
-  .table td,
-  .table tbody th {
-    padding-inline: 7px;
-  }
-}
-@media (max-width: 760px) {
-  .table {
-    min-inline-size: 960px;
-  }
-  .table .identityCell {
-    position: sticky;
-    inset-inline-start: 0;
-    background: white;
-    z-index: 1;
-    padding-inline-start: 8px;
-    box-shadow: -3px 0 6px #20304008;
-  }
-  .table thead .identityCell {
-    background: #f6f6f6;
-  }
-  .table tbody tr:hover .identityCell {
-    background: #f4f4f4;
-  }
-  .identityColumn {
-    width: 19%;
-  }
-  .priceColumn {
-    width: 12%;
-  }
-  .returnColumn {
-    width: 12%;
-  }
-  .volumeColumn {
-    width: 10%;
-  }
-  .chartColumn {
-    width: 11%;
-  }
-}
-
 .sortButton {
   display: inline-flex;
   align-items: center;
@@ -203,14 +162,14 @@
 }
 .sortButton:hover svg,
 .sortButton:focus-visible svg,
-.sortButton[data-active='true'] svg {
+.sortButton[data-active="true"] svg {
   opacity: 1;
 }
-.sortButton[data-active='true'] {
+.sortButton[data-active="true"] {
   color: var(--color-primary);
 }
 
-.table[data-fill='true'] {
+.table[data-fill="true"] {
   block-size: 100%;
   min-block-size: calc(30px + var(--row-count) * 54px);
 }
@@ -230,4 +189,15 @@
   .table tbody tr {
     transition: none;
   }
+}
+
+.table tbody th,
+.table td {
+  text-align: right;
+}
+.table thead th {
+  text-align: center;
+}
+.table thead .identityCell {
+  text-align: start;
 }

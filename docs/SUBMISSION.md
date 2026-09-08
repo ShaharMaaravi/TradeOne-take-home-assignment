@@ -11,8 +11,8 @@
 5. Open List Actions → Edit. Reorder with a handle and remove a row. Cancel to
    discard, then repeat and Save. Try keyboard sorting with Space and arrows.
 6. Rename the list, set it as default, and inspect the deletion confirmation.
-7. Open `/?live=0&scenario=load-error` and retry. Check the mobile drawer and table
-   scrolling at a narrow viewport.
+7. Open `/?live=0&scenario=load-error` and retry. Check the mobile drawer, expandable stock cards and sorting
+   at a narrow viewport; resize through 640px and 1200px.
 
 ## Technical discussion points
 

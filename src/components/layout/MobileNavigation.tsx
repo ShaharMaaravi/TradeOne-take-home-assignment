@@ -7,7 +7,7 @@ import styles from './AppShell.module.css'
 export function MobileNavigation() {
   const [open, setOpen] = useState(false)
   useEffect(() => {
-    const query = window.matchMedia('(min-width: 761px)')
+    const query = window.matchMedia('(min-width: 1200px)')
     const closeOnDesktop = () => {
       if (query.matches) setOpen(false)
     }
@@ -28,7 +28,7 @@ export function MobileNavigation() {
           className={styles.drawer}
           dir="rtl"
           onCloseAutoFocus={(event) => {
-            if (window.matchMedia('(min-width: 761px)').matches) {
+            if (window.matchMedia('(min-width: 1200px)').matches) {
               event.preventDefault()
               document.getElementById('watchlist')?.focus()
             }

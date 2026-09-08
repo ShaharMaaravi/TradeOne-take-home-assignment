@@ -70,7 +70,7 @@ test('pointer reorder works in a mobile dialog', async ({ page }) => {
   await page.waitForTimeout(60)
   await expect(dialog.getByRole('listitem').first()).toContainText('דוראל')
   await dialog.getByRole('button', { name: 'שמירה', exact: true }).click()
-  await expect(page.locator('tbody tr').first()).toContainText('דוראל')
+  await expect(page.getByRole('article').first()).toContainText('דוראל')
 })
 test('rename validates duplicate names, default selection and confirmed delete work', async ({
   page,

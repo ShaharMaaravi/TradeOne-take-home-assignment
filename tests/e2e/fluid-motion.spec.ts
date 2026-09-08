@@ -4,7 +4,6 @@ for (const viewport of [
   { width: 1440, height: 900 },
   { width: 1920, height: 1080 },
   { width: 2560, height: 1440 },
-  { width: 390, height: 844 },
 ]) {
   test(`table and ticker fill available space at ${viewport.width}px`, async ({
     page,

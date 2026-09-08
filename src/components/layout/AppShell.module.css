@@ -382,7 +382,7 @@
     padding: 10px;
   }
 }
-@media (max-width: 760px) {
+@media (max-width: 1199px) {
   .shell {
     --sidebar-width: 0px;
     --page-gutter: 16px;
@@ -419,7 +419,7 @@
     display: none;
   }
 }
-@media (max-height: 720px) and (min-width: 761px) {
+@media (max-height: 720px) and (min-width: 1200px) {
   .sidebar {
     overflow-y: auto;
   }
@@ -491,7 +491,7 @@
 .mobileSidebar .referral {
   margin-block-start: 24px;
 }
-@media (max-width: 760px) {
+@media (max-width: 1199px) {
   .mobileMenuButton {
     display: grid;
     place-items: center;
@@ -537,5 +537,33 @@
   .account > svg,
   .avatar {
     display: none;
+  }
+}
+
+@media (max-width: 1199px) {
+  .shell {
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+    padding-block-end: calc(
+      var(--footer-height) + var(--status-height) + var(--safe-bottom) + 12px
+    );
+  }
+  .workspace {
+    block-size: auto;
+    min-block-size: calc(
+      100dvh - var(--footer-height) - var(--status-height) - var(--safe-bottom)
+    );
+  }
+  .footer {
+    block-size: calc(var(--footer-height) + var(--safe-bottom));
+    padding-block-end: var(--safe-bottom);
+  }
+  .statusBar {
+    inset-block-end: calc(var(--footer-height) + var(--safe-bottom));
+  }
+  .poweredBy {
+    display: none;
+  }
+  .statusBar {
+    justify-content: center;
   }
 }

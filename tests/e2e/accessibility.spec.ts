@@ -89,8 +89,8 @@ for (const width of [320, 390, 768]) {
       await page.evaluate(() => document.documentElement.scrollWidth),
     ).toBeLessThanOrEqual(width)
     await page.screenshot({ path: info.outputPath(`responsive-${width}.png`) })
-    if (width < 761) {
-      const ticker = page.getByRole('region', { name: 'גלילת מדדי שוק' })
+    const ticker = page.getByRole('region', { name: 'גלילת מדדי שוק' })
+    if (await ticker.evaluate((el) => el.scrollWidth > el.clientWidth)) {
       await ticker.focus()
       await page.keyboard.press('ArrowLeft')
       await expect

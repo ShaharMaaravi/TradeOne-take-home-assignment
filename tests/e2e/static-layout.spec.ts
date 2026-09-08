@@ -49,37 +49,22 @@ for (const viewport of [
   })
 }
 
-test('mobile isolates horizontal scrolling to the table and keeps identities visible', async ({
+test('mobile uses readable stock cards and natural page scrolling', async ({
   page,
 }, testInfo) => {
   await page.setViewportSize({ width: 390, height: 844 })
   await page.goto('/?live=0')
   await page.evaluate(() => document.fonts.ready)
-  expect(
-    await page.evaluate(
-      () => document.documentElement.scrollWidth <= innerWidth,
-    ),
-  ).toBe(true)
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(
+    390,
+  )
   await expect(page.getByRole('complementary')).toBeHidden()
-  const region = page.getByRole('region', { name: 'טבלת רשימת מעקב' })
-  expect(
-    await region.evaluate(
-      (element) => element.scrollWidth > element.clientWidth,
-    ),
-  ).toBe(true)
-  const identity = page.locator('tbody th').first()
-  const before = await identity.boundingBox()
-  await region.evaluate((element) => {
-    element.scrollLeft = -400
-  })
-  await expect
-    .poll(async () => (await identity.boundingBox())!.x)
-    .toBeCloseTo(before!.x, 0)
-  await expect(identity).toBeVisible()
-  await page.screenshot({
-    path: testInfo.outputPath('mobile.png'),
-    fullPage: true,
-  })
+  await expect(page.getByRole('table')).toHaveCount(0)
+  await expect(page.getByRole('article')).toHaveCount(11)
+  await page.getByRole('article').last().scrollIntoViewIfNeeded()
+  expect(await page.evaluate(() => window.scrollY)).toBeGreaterThan(0)
+  await expect(page.getByRole('article').last()).toContainText('SHOP')
+  await page.screenshot({ path: testInfo.outputPath('mobile.png') })
 })
 
 test('keyboard skip link reaches the watchlist', async ({ page }) => {

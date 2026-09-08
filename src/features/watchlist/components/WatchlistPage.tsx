@@ -7,6 +7,8 @@ import { ListActions } from './ListActions'
 import { WatchlistSelector } from './WatchlistSelector'
 import { AddSecurityDialog } from './AddSecurityDialog'
 import { WatchlistSkeleton } from './WatchlistSkeleton'
+import { useCompactLayout } from '../../../components/layout/useCompactLayout'
+import { MobileWatchlist, MobileSortControls } from './MobileWatchlist'
 import { WatchlistTable } from './WatchlistTable'
 import { WatchlistFilters } from './WatchlistFilters'
 import { WatchlistEmptyState } from './WatchlistEmptyState'
@@ -14,6 +16,7 @@ import { activeFilterCount, selectVisibleInstrumentIds } from '../domain/view'
 import styles from './WatchlistPage.module.css'
 
 export function WatchlistPage() {
+  const compact = useCompactLayout()
   const [filtersOpen, setFiltersOpen] = useState(false)
   const [addOpen, setAddOpen] = useState(false)
   const addButtonRef = useRef<HTMLButtonElement>(null)
@@ -83,6 +86,7 @@ export function WatchlistPage() {
         </div>
       </div>
       {filtersOpen && <WatchlistFilters />}
+      {compact && <MobileSortControls />}
       <div className={styles.results} aria-busy={isSwitching}>
         {isSwitching ? (
           <WatchlistSkeleton />
@@ -96,10 +100,17 @@ export function WatchlistPage() {
             }}
           />
         ) : visibleIds.length > 0 ? (
-          <WatchlistTable
-            instruments={instruments}
-            instrumentIds={visibleIds}
-          />
+          compact ? (
+            <MobileWatchlist
+              instruments={instruments}
+              instrumentIds={visibleIds}
+            />
+          ) : (
+            <WatchlistTable
+              instruments={instruments}
+              instrumentIds={visibleIds}
+            />
+          )
         ) : (
           <WatchlistEmptyState
             isEmptyList={activeList.instrumentIds.length === 0}

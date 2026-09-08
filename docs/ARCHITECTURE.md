@@ -36,9 +36,9 @@ Missing/non-finite values display an em dash, while zero remains a valid value.
 The desktop proportions follow the supplied 832×464 recording, reviewed at a
 1664×928 viewport. Assistant is bundled locally as a close Hebrew font match;
 the recording does not identify the original font. Spacing scales within bounded
-sizes. The table keeps all columns in a horizontal scroller on narrow screens,
-with a sticky security identity column. Mobile navigation uses a drawer below 761px; the toolbar stacks on the narrowest
-screens and the ticker scrolls independently.
+sizes. Below 1200px the table becomes stock cards: one column below 640px and
+two columns from 640–1199px. Compact navigation uses a drawer and the ticker
+scrolls independently.
 
 The PDF requires absolute change, so the table includes a separate change column
 in addition to percentage change. Amot was added to the mock catalogue to match
@@ -140,14 +140,23 @@ a drag, name validation, default/deletion fallback, and protection of the last l
 
 ## Responsive layout and accessibility
 
-The desktop sidebar becomes a modal navigation drawer below 761px. Escape closes
+The desktop sidebar becomes a modal navigation drawer below 1200px. Escape closes
 it and restores focus; resizing to desktop closes it and focuses the watchlist.
-Only the watchlist destination is active in this standalone clone. The 320px
-layout stacks toolbar groups, and long list names truncate within their control.
+Only the watchlist destination is active in this standalone clone. Below 640px,
+the toolbar stacks and cards use one column; 640–1199px uses two card columns.
+Cards show identity, price, daily percentage and a full-width sparkline. Native
+expandable details expose absolute change, volume, daily range, trend and 30-day
+return. Compact sort controls support every table sort key and either direction.
+A media-query subscription mounts only the active presentation; shared store state
+preserves filters and ordering when resizing. Each card subscribes to its quote.
+Table headings retain their original alignment; cell values align right and numerical text retains LTR direction.
 Mobile add/filter/list controls and catalogue hearts have larger touch targets.
-Dialogs can scroll in short viewports, including landscape/keyboard-sized views.
-The table retains all columns in its own horizontal scroller with sticky identity
-cells; the market ticker has a separate keyboard-focusable scroll region.
+Dialogs scroll in short viewports. Compact layouts use document scrolling and
+safe-area spacing above the fixed footer; the ticker scrolls separately.
+
+Touch tests run in Android Chrome and iPhone WebKit emulation, including metrics,
+sorting, filtering, membership edits, live updates and breakpoint transitions at
+639/640/1199/1200px. This does not constitute physical-device testing.
 
 Secondary text and financial colors are deliberately darker than the video to
 improve contrast. Positive/negative values retain explicit signs. Existing focus
@@ -194,7 +203,7 @@ listed above remain. Cross-session persistence is not implemented. Netlify setup
 
 ## Full-screen layout and smooth updates
 
-Following review, the workspace uses narrow fluid gutters and fills the dynamic
+On desktop, the workspace uses narrow fluid gutters and fills the dynamic
 viewport height above the fixed status/ticker bars. The table scrolls internally
 with sticky column headings. Lists with six or more visible rows fill the panel;
 shorter lists keep compact rows within the full-height panel. Filters reserve their

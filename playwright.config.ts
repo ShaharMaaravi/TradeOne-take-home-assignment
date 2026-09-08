@@ -13,6 +13,16 @@ export default defineConfig({
   projects: [
     { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
     {
+      name: 'android',
+      testMatch: '**/mobile.spec.ts',
+      use: { ...devices['Pixel 7'] },
+    },
+    {
+      name: 'iphone',
+      testMatch: '**/mobile.spec.ts',
+      use: { ...devices['iPhone 13'], defaultBrowserType: 'webkit' },
+    },
+    {
       name: 'firefox',
       testMatch: '**/integration.spec.ts',
       use: { ...devices['Desktop Firefox'] },

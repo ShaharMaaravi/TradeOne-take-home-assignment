@@ -39,6 +39,7 @@ export interface WatchlistState {
   setFilters: (filters: Partial<WatchlistFilters>) => void
   resetFilters: () => void
   cycleSort: (key: SortKey) => void
+  setSort: (sort: SortDescriptor) => void
   market: MockMarket
   indices: readonly MarketIndex[]
   tickNumber: number
@@ -225,6 +226,7 @@ export function createWatchlistStore(
       }),
     filters: { ...DEFAULT_FILTERS },
     sort: null,
+    setSort: (sort) => set({ sort }),
     setFilters: (filters) =>
       set((state) => ({ filters: { ...state.filters, ...filters } })),
     resetFilters: () => set({ filters: { ...DEFAULT_FILTERS } }),

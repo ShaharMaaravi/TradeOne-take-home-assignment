@@ -56,7 +56,7 @@
   block-size: 16px;
   stroke-width: 1.6;
 }
-@media (max-width: 760px) {
+@media (max-width: 1199px) {
   .toolbar {
     block-size: 64px;
     gap: 12px;
@@ -101,7 +101,7 @@
 .listSelector svg {
   flex-shrink: 0;
 }
-@media (max-width: 760px) {
+@media (max-width: 1199px) {
   .toolbar {
     block-size: auto;
     min-block-size: 76px;
@@ -143,4 +143,49 @@
   flex: 1;
   min-block-size: 160px;
   padding-block-end: 8px;
+}
+
+@media (max-width: 1199px) {
+  .page {
+    min-block-size: auto;
+  }
+  .results {
+    min-block-size: 0;
+  }
+  .toolbar {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 10px;
+    padding-block: 10px 16px;
+  }
+  .listSelector {
+    inline-size: 100%;
+    max-inline-size: 100%;
+    min-inline-size: 0;
+    font-size: 14px;
+  }
+  .toolbarActions {
+    gap: 6px;
+  }
+  .listActions {
+    inline-size: 44px;
+    block-size: 44px;
+  }
+  .addButton {
+    font-size: 14px;
+    white-space: nowrap;
+  }
+}
+@media (max-width: 639px) {
+  .toolbar {
+    grid-template-columns: 1fr;
+  }
+  .toolbarActions {
+    margin-inline-start: 0;
+    display: grid;
+    grid-template-columns: 44px 1fr 44px;
+  }
+  .addButton {
+    justify-content: center;
+  }
 }

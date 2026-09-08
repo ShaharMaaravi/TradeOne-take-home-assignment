@@ -40,7 +40,7 @@
   inline-size: 15px;
   block-size: 15px;
 }
-@media (max-width: 760px) {
+@media (max-width: 1199px) {
   .content {
     padding: 44px 18px 18px;
     border-radius: 12px;
