@@ -1,6 +1,6 @@
 .shell {
   --sidebar-width: clamp(174px, 13.46vw, 250px);
-  --page-gutter: clamp(16px, 1.5vw, 32px);
+  --page-gutter: clamp(24px, calc(17.5vw - 186px), 150px);
   --footer-height: 52px;
   --status-height: 30px;
   min-block-size: 100svh;

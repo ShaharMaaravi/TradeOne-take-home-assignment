@@ -149,7 +149,7 @@ expandable details expose absolute change, volume, daily range, trend and 30-day
 return. Compact sort controls support every table sort key and either direction.
 A media-query subscription mounts only the active presentation; shared store state
 preserves filters and ordering when resizing. Each card subscribes to its quote.
-Table headings retain their original alignment; cell values align right and numerical text retains LTR direction.
+Table headings and cell values align right; numerical text retains LTR direction.
 Mobile add/filter/list controls and catalogue hearts have larger touch targets.
 Dialogs scroll in short viewports. Compact layouts use document scrolling and
 safe-area spacing above the fixed footer; the ticker scrolls separately.
@@ -203,7 +203,7 @@ listed above remain. Cross-session persistence is not implemented. Netlify setup
 
 ## Full-screen layout and smooth updates
 
-On desktop, the workspace uses narrow fluid gutters and fills the dynamic
+On desktop, the workspace uses fluid side gutters from 24px to 150px (150px at 1920px and wider) and fills the dynamic
 viewport height above the fixed status/ticker bars. The table scrolls internally
 with sticky column headings. Lists with six or more visible rows fill the panel;
 shorter lists keep compact rows within the full-height panel. Filters reserve their

@@ -109,7 +109,7 @@ test('expanded mobile cards pass accessibility checks and update live', async ({
   await expect(card.locator('details')).toHaveAttribute('open', '')
 })
 
-test('three layout modes switch at 640 and 1200px; table retains original headings and right-aligned values', async ({
+test('three layout modes switch at 640 and 1200px; table headings and values align right', async ({
   page,
 }) => {
   await page.goto('/?live=0')
@@ -131,9 +131,9 @@ test('three layout modes switch at 640 and 1200px; table retains original headin
         .locator('tbody tr:first-child td')
         .all())
         await expect(cell).toHaveCSS('text-align', 'right')
-      await expect(page.locator('thead th').first()).toHaveCSS('text-align', 'start')
+      await expect(page.locator('thead th').first()).toHaveCSS('text-align', 'right')
       for (const heading of await page.locator('thead th:not(:first-child)').all())
-        await expect(heading).toHaveCSS('text-align', 'center')
+        await expect(heading).toHaveCSS('text-align', 'right')
       await expect(
         page.locator('tbody tr:first-child td').nth(2).locator('bdi'),
       ).toHaveCSS('direction', 'ltr')

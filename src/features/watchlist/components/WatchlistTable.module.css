@@ -145,7 +145,7 @@
 .sortButton {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 3px;
   max-inline-size: 100%;
   border: 0;
@@ -196,8 +196,12 @@
   text-align: right;
 }
 .table thead th {
-  text-align: center;
+  text-align: right;
 }
 .table thead .identityCell {
-  text-align: start;
+  text-align: right;
+}
+
+.sortButton {
+  inline-size: 100%;
 }

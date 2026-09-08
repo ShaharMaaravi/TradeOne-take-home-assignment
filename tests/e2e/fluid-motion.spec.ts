@@ -16,7 +16,10 @@ for (const viewport of [
       .getByRole('button', { name: 'המשך עדכוני מחירים' })
       .locator('..')
       .boundingBox())!
-    expect(bounds.x).toBeLessThanOrEqual(32)
+    expect(bounds.x).toBeCloseTo(
+      Math.min(150, Math.max(24, viewport.width * 0.175 - 186)),
+      0,
+    )
     expect(Math.abs(bounds.y + bounds.height - status.y)).toBeLessThanOrEqual(
       10,
     )
