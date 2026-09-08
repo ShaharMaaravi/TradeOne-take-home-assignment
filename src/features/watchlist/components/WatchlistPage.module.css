@@ -189,3 +189,16 @@
     justify-content: center;
   }
 }
+
+@media (min-width: 640px) and (max-width: 1199px) {
+  .toolbar {
+    display: flex;
+  }
+  .listSelector {
+    inline-size: auto;
+    min-inline-size: 136px;
+    max-inline-size: min(320px, 45%);
+    padding-inline: 17px;
+    font-size: var(--font-body);
+  }
+}
