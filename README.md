@@ -6,8 +6,7 @@ simulated locally; no backend, API key, or environment file is required.
 
 [Source repository](https://github.com/ShaharMaaravi/TradeOne-take-home-assignment)
 
-**Live demo:** Netlify deployment is prepared; the public URL will be added after
-review and deployment.
+**Live demo:** [https://shahar-tradeone-watchlist.netlify.app](https://shahar-tradeone-watchlist.netlify.app)
 
 ## Run locally
 

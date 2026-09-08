@@ -27,9 +27,9 @@
 
 ## Before sending
 
-- Complete the step 10 review, commit and push.
-- Deploy to Netlify and verify the resulting public URL.
-- Add that verified URL to README and the submission message.
+- Step 10 was reviewed, committed and pushed.
+- The Netlify demo is deployed and verified in a signed-out browser.
+- The verified URL is included in README and the draft below.
 - Give the reviewer access to the private GitHub repository, or deliberately change
   its visibility yourself if that is your preference.
 
@@ -40,7 +40,7 @@ Hi,
 Here is my Watchlist take-home assignment:
 
 - Source: https://github.com/ShaharMaaravi/TradeOne-take-home-assignment
-- Live demo: [insert the verified Netlify URL]
+- Live demo: https://shahar-tradeone-watchlist.netlify.app
 - Local setup and technical notes are included in README.
 
 The application uses React and TypeScript with locally simulated market data.

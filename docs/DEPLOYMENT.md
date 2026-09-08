@@ -1,5 +1,14 @@
 # Netlify deployment
 
+**Live site:** [https://shahar-tradeone-watchlist.netlify.app](https://shahar-tradeone-watchlist.netlify.app)
+
+Published through Netlify CLI on 2026-09-08 from reviewed commit `c4a7b90`.
+Signed-out verification passed for asset loading, catalogue membership, error
+recovery, the mobile drawer and reload, with no browser errors or failed HTTP
+responses. This project is linked locally but is not connected to Git deployment;
+pushing to GitHub alone does not update the live site. Use the CLI instructions
+below for subsequent releases, or connect the repository to enable automatic builds.
+
 The app is a static Vite build. `netlify.toml` defines `npm run build`, the `dist`
 publish directory, and Node 24 (also pinned by `.nvmrc`). There are no required
 secrets, functions, databases, redirects or server-side routes. Review modes use
@@ -29,14 +38,14 @@ npm run check
 npm run test:production
 npx netlify-cli login
 npx netlify-cli link
-npx netlify-cli deploy --dir=dist
+npx netlify-cli deploy --dir=dist --no-build
 ```
 
 `link` selects an existing project; create the project in Netlify first if needed.
 The deploy command above produces a draft URL. Verify that URL before publishing:
 
 ```sh
-npx netlify-cli deploy --dir=dist --prod
+npx netlify-cli deploy --dir=dist --no-build --prod
 ```
 
 Do not paste authentication tokens into the repository. Local `.netlify/` metadata
