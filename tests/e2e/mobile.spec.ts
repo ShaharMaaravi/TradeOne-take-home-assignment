@@ -3,7 +3,7 @@ import AxeBuilder from '@axe-core/playwright'
 
 test.use({ hasTouch: true })
 
-for (const width of [320, 390, 768]) {
+for (const width of [320, 390, 600]) {
   test(`cards expose all metrics without sideways scrolling at ${width}px`, async ({
     page,
   }, info) => {
@@ -115,7 +115,7 @@ test('three layout modes switch at 640 and 1200px; table headings and values ali
   await page.goto('/?live=0')
   for (const width of [639, 640, 1199, 1200]) {
     await page.setViewportSize({ width, height: 900 })
-    if (width < 1200) {
+    if (width < 640) {
       await expect(page.getByRole('article')).toHaveCount(11)
       const first = (await page.getByRole('article').nth(0).boundingBox())!
       const second = (await page.getByRole('article').nth(1).boundingBox())!
@@ -127,6 +127,12 @@ test('three layout modes switch at 640 and 1200px; table headings and values ali
     } else {
       await expect(page.getByRole('table')).toBeVisible()
       await expect(page.getByRole('article')).toHaveCount(0)
+      await expect(page.getByRole('columnheader', { name: 'שינוי', exact: true })).toHaveCount(0)
+      if (width < 1200) {
+        await expect(page.getByRole('columnheader')).toHaveCount(4)
+        for (const label of ['שם', 'שער אחרון', '% שינוי', 'גרף יומי'])
+          await expect(page.getByRole('columnheader').filter({ hasText: label })).toBeVisible()
+      } else await expect(page.getByRole('columnheader')).toHaveCount(9)
       for (const cell of await page
         .locator('tbody tr:first-child td')
         .all())

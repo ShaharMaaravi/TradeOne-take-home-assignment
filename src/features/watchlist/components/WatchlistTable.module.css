@@ -16,13 +16,10 @@
   font-variant-numeric: tabular-nums;
 }
 .identityColumn {
-  width: 25%;
+  width: 32%;
 }
 .priceColumn {
   width: 11%;
-}
-.changeColumn {
-  width: 7%;
 }
 .percentColumn {
   width: 7%;
@@ -204,4 +201,21 @@
 
 .sortButton {
   inline-size: 100%;
+}
+
+@media (min-width: 640px) and (max-width: 1199px) {
+  .desktopOnly { display: none; }
+  .tableScroll { block-size: auto; }
+  .table, .table[data-fill="true"] {
+    min-inline-size: 0;
+    block-size: auto;
+  }
+  .identityColumn { width: 40%; }
+  .priceColumn { width: 20%; }
+  .percentColumn { width: 16%; }
+  .chartColumn { width: 24%; }
+  .table thead th { font-size: 12px; }
+  .table tbody tr { block-size: 64px; }
+  .symbol { font-size: 14px; }
+  .description { font-size: 11px; }
 }

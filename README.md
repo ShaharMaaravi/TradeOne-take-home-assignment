@@ -41,8 +41,8 @@ npm run preview
 
 Keyboard reordering: focus a drag handle, press Space, use arrow keys, then Space
 to drop. Escape cancels a drag before closing the editor. Three responsive modes
-keep the interface readable: single-column stock cards below 640px, two-column
-cards from 640–1199px, and the full-height desktop table from 1200px. Cards expose
+keep the interface readable: single-column stock cards below 640px, a four-column
+table from 640–1199px, and the full-height desktop table from 1200px. Cards expose
 all quote metrics through “נתונים נוספים”; dedicated controls retain every sort
 option. Filters and ordering survive layout changes. Column values align right, with numeric signs and decimals kept left-to-right. Compact layouts
 use a navigation drawer and normal page scrolling above the fixed ticker, which

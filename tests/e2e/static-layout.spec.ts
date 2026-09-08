@@ -17,7 +17,7 @@ for (const viewport of [
     ).toBeVisible()
     await expect(page.locator('html')).toHaveAttribute('dir', 'rtl')
     await expect(page.locator('tbody tr')).toHaveCount(11)
-    await expect(page.getByRole('columnheader')).toHaveCount(10)
+    await expect(page.getByRole('columnheader')).toHaveCount(9)
     await expect(
       page.locator('tbody tr').first().locator('td').nth(2).locator('bdi'),
     ).toHaveCSS('direction', 'ltr')

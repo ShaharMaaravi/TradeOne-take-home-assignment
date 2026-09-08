@@ -2,7 +2,7 @@ import { Ellipsis } from 'lucide-react'
 import type { CSSProperties } from 'react'
 import type { Instrument, InstrumentId } from '../domain/types'
 import { getQuoteMetrics } from '../domain/calculations'
-import { formatChange, formatPercent, formatVolume } from '../domain/formatters'
+import { formatPercent, formatVolume } from '../domain/formatters'
 import { DailyRangeBar, Sparkline, TrendBar } from './MarketVisuals'
 import { memo } from 'react'
 import { SortableColumnHeader } from './SortableColumnHeader'
@@ -46,17 +46,12 @@ const SecurityRow = memo(function SecurityRow({
         <PriceCell price={quote.price} instrument={instrument} />
       </td>
       <td className={changeClass}>
-        <bdi dir="ltr">
-          {formatChange(metrics.change, instrument.priceDecimals)}
-        </bdi>
-      </td>
-      <td className={changeClass}>
         <bdi dir="ltr">{formatPercent(metrics.changePercent)}</bdi>
       </td>
-      <td>
+      <td className={styles.desktopOnly}>
         <bdi dir="ltr">{formatVolume(quote.volume)}</bdi>
       </td>
-      <td>
+      <td className={styles.desktopOnly}>
         <DailyRangeBar quote={quote} decimals={instrument.priceDecimals} />
       </td>
       <td>
@@ -66,15 +61,15 @@ const SecurityRow = memo(function SecurityRow({
           label={`גרף יומי ${instrument.symbol}`}
         />
       </td>
-      <td>
+      <td className={styles.desktopOnly}>
         <TrendBar trend={metrics.trend} />
       </td>
-      <td>
+      <td className={styles.desktopOnly}>
         <bdi dir="ltr" className={`${styles.returnBadge} ${returnClass}`}>
           {formatPercent(metrics.return30DayPercent)}
         </bdi>
       </td>
-      <td>
+      <td className={styles.desktopOnly}>
         <button
           className={styles.rowActions}
           disabled
@@ -112,14 +107,13 @@ export function WatchlistTable({
         <colgroup>
           <col className={styles.identityColumn} />
           <col className={styles.priceColumn} />
-          <col className={styles.changeColumn} />
           <col className={styles.percentColumn} />
-          <col className={styles.volumeColumn} />
-          <col className={styles.rangeColumn} />
+          <col className={`${styles.volumeColumn} ${styles.desktopOnly}`} />
+          <col className={`${styles.rangeColumn} ${styles.desktopOnly}`} />
           <col className={styles.chartColumn} />
-          <col className={styles.trendColumn} />
-          <col className={styles.returnColumn} />
-          <col className={styles.actionsColumn} />
+          <col className={`${styles.trendColumn} ${styles.desktopOnly}`} />
+          <col className={`${styles.returnColumn} ${styles.desktopOnly}`} />
+          <col className={`${styles.actionsColumn} ${styles.desktopOnly}`} />
         </colgroup>
         <thead>
           <tr>
@@ -132,13 +126,13 @@ export function WatchlistTable({
             <SortableColumnHeader sortKey="price">
               שער אחרון
             </SortableColumnHeader>
-            <SortableColumnHeader sortKey="change">שינוי</SortableColumnHeader>
             <SortableColumnHeader sortKey="changePercent">
               % שינוי
             </SortableColumnHeader>
-            <SortableColumnHeader sortKey="volume">מחזור</SortableColumnHeader>
+            <SortableColumnHeader sortKey="volume" className={styles.desktopOnly}>מחזור</SortableColumnHeader>
             <SortableColumnHeader
               sortKey="range"
+              className={styles.desktopOnly}
               hint="מיון לפי מיקום השער בטווח היומי"
             >
               גבוה/נמוך יומי
@@ -151,14 +145,15 @@ export function WatchlistTable({
             </SortableColumnHeader>
             <SortableColumnHeader
               sortKey="trend"
+              className={styles.desktopOnly}
               hint="מיון לפי מספר העליות פחות מספר הירידות"
             >
               בר מגמה
             </SortableColumnHeader>
-            <SortableColumnHeader sortKey="return30Day">
+            <SortableColumnHeader sortKey="return30Day" className={styles.desktopOnly}>
               תשואת 30 ימים
             </SortableColumnHeader>
-            <th scope="col">
+            <th scope="col" className={styles.desktopOnly}>
               <span className="sr-only">פעולות</span>
             </th>
           </tr>

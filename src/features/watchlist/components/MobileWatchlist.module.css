@@ -161,12 +161,6 @@
   inline-size: 18px;
   block-size: 18px;
 }
-@media (min-width: 640px) {
-  .cards {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    align-items: start;
-  }
-}
 
 .card,
 .metrics dt,

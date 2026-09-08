@@ -36,12 +36,12 @@ Missing/non-finite values display an em dash, while zero remains a valid value.
 The desktop proportions follow the supplied 832×464 recording, reviewed at a
 1664×928 viewport. Assistant is bundled locally as a close Hebrew font match;
 the recording does not identify the original font. Spacing scales within bounded
-sizes. Below 1200px the table becomes stock cards: one column below 640px and
-two columns from 640–1199px. Compact navigation uses a drawer and the ticker
+sizes. Below 640px the table becomes single-column stock cards. From 640–1199px,
+a compact table shows name, last price, percentage change and daily chart. Compact navigation uses a drawer and the ticker
 scrolls independently.
 
-The PDF requires absolute change, so the table includes a separate change column
-in addition to percentage change. Amot was added to the mock catalogue to match
+Following user review, the absolute-change column is omitted from the table;
+percentage change remains. Absolute change is still available in mobile card details. Amot was added to the mock catalogue to match
 the reference's eleven visible rows. Chart paths and returns come from seeded
 mock data and will not equal the recording's market values. The index ticker uses a separate illustrative fixture updated by the same feed
 cycle; it is not calculated as a weighted index of the visible securities.
@@ -143,7 +143,7 @@ a drag, name validation, default/deletion fallback, and protection of the last l
 The desktop sidebar becomes a modal navigation drawer below 1200px. Escape closes
 it and restores focus; resizing to desktop closes it and focuses the watchlist.
 Only the watchlist destination is active in this standalone clone. Below 640px,
-the toolbar stacks and cards use one column; 640–1199px uses two card columns.
+the toolbar stacks and cards use one column; 640–1199px uses the four-column table.
 Cards show identity, price, daily percentage and a full-width sparkline. Native
 expandable details expose absolute change, volume, daily range, trend and 30-day
 return. Compact sort controls support every table sort key and either direction.
