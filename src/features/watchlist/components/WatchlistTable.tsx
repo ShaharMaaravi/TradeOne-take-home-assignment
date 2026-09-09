@@ -139,6 +139,7 @@ export function WatchlistTable({
             </SortableColumnHeader>
             <SortableColumnHeader
               sortKey="intraday"
+              className={styles.chartHeading}
               hint="מיון לפי התשואה משער הפתיחה"
             >
               גרף יומי

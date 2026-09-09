@@ -219,3 +219,10 @@
   .symbol { font-size: 14px; }
   .description { font-size: 11px; }
 }
+
+/* Match the centered plot's visible x=2..98 span in its 100x42 viewBox. */
+.chartHeading .sortButton {
+  display: flex;
+  inline-size: calc(36px * 96 / 42);
+  margin-inline: auto;
+}
