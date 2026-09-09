@@ -61,7 +61,7 @@ const SecurityRow = memo(function SecurityRow({
           label={`גרף יומי ${instrument.symbol}`}
         />
       </td>
-      <td className={styles.desktopOnly}>
+      <td className={`${styles.desktopOnly} ${styles.trendCell}`}>
         <TrendBar trend={metrics.trend} />
       </td>
       <td className={styles.desktopOnly}>

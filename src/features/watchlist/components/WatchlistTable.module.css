@@ -226,3 +226,10 @@
   inline-size: calc(36px * 96 / 42);
   margin-inline: auto;
 }
+
+.table td.trendCell {
+  padding-inline-start: 6px;
+}
+.trendCell > [role="img"] {
+  justify-content: flex-end;
+}
