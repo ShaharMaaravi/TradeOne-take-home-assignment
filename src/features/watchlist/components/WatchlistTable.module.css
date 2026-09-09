@@ -16,7 +16,7 @@
   font-variant-numeric: tabular-nums;
 }
 .identityColumn {
-  width: 32%;
+  width: 22.4%;
 }
 .priceColumn {
   width: 11%;
@@ -31,7 +31,7 @@
   width: 10%;
 }
 .chartColumn {
-  width: 9%;
+  width: 18.6%;
 }
 .trendColumn {
   width: 8%;
@@ -210,10 +210,10 @@
     min-inline-size: 0;
     block-size: auto;
   }
-  .identityColumn { width: 40%; }
+  .identityColumn { width: 28%; }
   .priceColumn { width: 20%; }
   .percentColumn { width: 16%; }
-  .chartColumn { width: 24%; }
+  .chartColumn { width: 36%; }
   .table thead th { font-size: 12px; }
   .table tbody tr { block-size: 64px; }
   .symbol { font-size: 14px; }
